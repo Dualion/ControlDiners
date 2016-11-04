@@ -1,0 +1,30 @@
+{
+  "generator-jhipster": {
+    "jhipsterVersion": "3.10.0",
+    "baseName": "ControlDiners",
+    "packageName": "com.dualion.controldiners",
+    "packageFolder": "com/dualion/controldiners",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "hibernateCache": "no",
+    "clusteredHttpSession": false,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "jwtSecretKey": "76855495d7eb966f759386341b78a379f0aa8fab",
+    "useSass": false,
+    "applicationType": "monolith",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "enableTranslation": true,
+    "nativeLanguage": "ca",
+    "languages": [
+      "ca"
+    ]
+  }
+}
