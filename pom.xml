@@ -11,7 +11,7 @@
 
     <groupId>com.dualion.controldiners</groupId>
     <artifactId>control-diners</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>war</packaging>
     <name>Control Diners</name>
 
@@ -922,4 +922,9 @@
             </dependencies>
         </profile>
     </profiles>
+    <description>Aplicació per fer un control d'un pot amb diners.</description>
+    <organization>
+    	<name>Dualion</name>
+    	<url>dualion.com</url>
+    </organization>
 </project>
