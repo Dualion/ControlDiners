@@ -1,0 +1,23 @@
+{
+    "controlDinersApp": {
+        "quantitat" : {
+            "home": {
+                "title": "Quantitats",
+                "createLabel": "Create a new Quantitat",
+                "createOrEditLabel": "Create or edit a Quantitat",
+                "search": "Search for Quantitat"
+            },
+            "created": "A new Quantitat is created with identifier {{ param }}",
+            "updated": "A Quantitat is updated with identifier {{ param }}",
+            "deleted": "A Quantitat is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Quantitat {{ id }}?"
+            },
+            "detail": {
+                "title": "Quantitat"
+            },
+            "diners": "Diners",
+            "actiu": "Actiu"
+        }
+    }
+}
