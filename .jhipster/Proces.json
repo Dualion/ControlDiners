@@ -1,0 +1,20 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "dataInici",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "estat",
+            "fieldType": "Boolean",
+            "fieldValidateRules": []
+        }
+    ],
+    "changelogDate": "20161028233254",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "proces",
+    "pagination": "pager"
+}
