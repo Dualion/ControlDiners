@@ -34,7 +34,8 @@
                 }*/
             },
             'pagament': { url: 'api/pots/pagament', method: 'POST' },
-            'extreure': {url: 'api/pots/extreure', method: 'POST' }
+            'extreure': {url: 'api/pots/extreure', method: 'POST' },
+            'cancelarPagament': {url: 'api/pots/cancelarpagament', method: 'POST'}
         });
     }
 })();

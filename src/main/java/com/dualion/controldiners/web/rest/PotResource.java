@@ -51,11 +51,11 @@ public class PotResource {
      */
     @PostMapping("/api/pots/pagament")
     @Timed
-    public ResponseEntity<?> createPagament(@Valid @RequestBody PagamentVM pafamentVM) throws URISyntaxException {
-    	log.debug("REST request to Pagament pot : {}", pafamentVM);
+    public ResponseEntity<?> createPagament(@Valid @RequestBody PagamentVM pagamentVM) throws URISyntaxException {
+    	log.debug("REST request to Pagament pot : {}", pagamentVM);
     	PotDTO potDTO;
 		try {
-			potDTO = potService.savePagament(pafamentVM);
+			potDTO = potService.savePagament(pagamentVM);
 		} catch (QuantitatException e) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "quantitatnotexist", e.getMessage())).body(null);
 		} catch (ProcesException e) {
@@ -64,6 +64,33 @@ public class PotResource {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "usuarisproces", e.getMessage())).body(null);
 		}
 
+		return ResponseEntity.created(new URI("/api/pots/" + potDTO.getId()))
+		        .headers(HeaderUtil.createEntityCreationAlert("pot", potDTO.getId().toString()))
+		        .body(potDTO);
+    }
+    
+    /**
+     * POST  /api/pots/cancelarpagament : Cancel·lar pagament.
+     *
+     * @param PagamentVM 
+     * @return the ResponseEntity with status 201 (Created) and with body the new potDTO, or with status 400 (Bad Request) if the pot has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/api/pots/cancelarpagament")
+    @Timed
+    public ResponseEntity<?> createCancelarPagament(@Valid @RequestBody PagamentVM pagamentVM) throws URISyntaxException {
+    	log.debug("REST request to Cancelar Pagament pot : {}", pagamentVM);
+    	PotDTO potDTO;
+    	try {
+    		potDTO = potService.cancelarPagament(pagamentVM);
+    	} catch (PotException e) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "potnegatiu", e.getMessage())).body(null);
+		} catch (ProcesException e) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "procesnoactive", e.getMessage())).body(null);
+		} catch (UsuarisProcesException e) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("pot", "usuarisproces", e.getMessage())).body(null);
+		}
+		
 		return ResponseEntity.created(new URI("/api/pots/" + potDTO.getId()))
 		        .headers(HeaderUtil.createEntityCreationAlert("pot", potDTO.getId().toString()))
 		        .body(potDTO);

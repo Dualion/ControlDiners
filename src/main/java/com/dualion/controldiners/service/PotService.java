@@ -28,6 +28,17 @@ public interface PotService {
     PotDTO savePagament(PagamentVM pagamentVM) throws QuantitatException, ProcesException, UsuarisProcesException;
 
     /**
+     * Cancelar pagament.
+     *
+     * @param usuariId
+     * @return the persisted entity
+     * @throws ProcesException 
+     * @throws UsuarisProcesException 
+     * @throws PotException 
+     */
+    PotDTO cancelarPagament(PagamentVM pagamentVM) throws ProcesException, PotException, UsuarisProcesException;
+    
+    /**
      * Save extreure diners.
      *
      * @param diners

@@ -109,6 +109,52 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
     }
     
     /**
+     * Cancelar pagament.
+     *
+     * @param usuariId
+     * @return the persisted entity
+     * @throws ProcesException 
+     * @throws PotException, UsuarisProcesException 
+     */
+    public PotDTO cancelarPagament(PagamentVM pagamentVM) throws ProcesException, PotException, UsuarisProcesException {
+    	
+    	log.debug("Request to save Pagament : {}", pagamentVM);
+        ProcesDTO procesDTO = procesService.findActiva();
+        PotDTO result = null;
+        if (procesDTO != null) {
+        	UsuarisProcesDTO usuarisProcesDTO = usuarisProcesService.findOneByUserIdAndProcesId(pagamentVM.getUserId(), procesDTO.getId());
+        	if (usuarisProcesDTO != null && usuarisProcesDTO.getDiners() > 0.0) {
+        		Float dinersATreure = usuarisProcesDTO.getDiners();
+        		Optional<Pot> lastPot = potRepository.findFirstByOrderByDataDesc();
+        		
+        		//Afegim el pagament al total del pot si tenim suficients diners al pot.
+        		if (lastPot.isPresent() && (lastPot.get().getDinersTotals() - dinersATreure) >= 0 ) {
+        			usuarisProcesDTO.setDiners(0.0F);
+            		usuarisProcesService.save(usuarisProcesDTO);
+        			
+            		Pot newPot = new Pot();
+        			newPot.dinersTotals(lastPot.get().getDinersTotals() - dinersATreure)
+        				.setDescripcio(new StringBuilder("Pagament ")
+        						.append(dinersATreure.toString())
+        						.append("/")
+        						.append(lastPot.get().getDinersTotals() - dinersATreure)
+        						.append(" -> ").append(usuarisProcesDTO.getUsuarisNom())
+        						.toString());
+    				newPot = potRepository.save(newPot);
+        			result = potMapper.potToPotDTO(newPot);
+        		} else {
+        			throw new PotException("No es pot extreure més diners dels que hi han al pot");
+        		}
+        	} else {
+        		throw new UsuarisProcesException("No existeix aquest usuari en el procés actiu");
+        	}
+        } else {
+        	throw new ProcesException("No existeix ningun procés actiu");
+        }
+        return result;	
+    }
+    
+    /**
      * Save extreure diners.
      *
      * @param diners

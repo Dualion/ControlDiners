@@ -17,6 +17,7 @@
         vm.crearProces = crearProces;
         vm.acabarProces = acabarProces;
         vm.pagar = pagar;
+        vm.cancelarPagament = cancelarPagament;
         vm.quantitatNova = quantitatNova;
         vm.extreurePot = extreurePot;
 
@@ -53,6 +54,15 @@
         		getUsuarisProces();
         		getLast();
         	});
+        }
+        
+        function cancelarPagament(userId) {
+        	Pot.cancelarPagament({
+	      		  'userId': userId
+	      	}).$promise.then(function(data) {
+	      		getUsuarisProces();
+	      		getLast();
+	      	});
         }
 
         function getUsuarisProces() {
