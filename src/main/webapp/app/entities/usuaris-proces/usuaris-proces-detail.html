@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="controlDinersApp.usuarisProces.detail.title">Usuaris Proces</span> {{vm.usuarisProces.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="controlDinersApp.usuarisProces.diners">Diners</span></dt>
+        <dd>
+            <span>{{vm.usuarisProces.diners}}</span>
+        </dd>
+        <dt><span data-translate="controlDinersApp.usuarisProces.proces">Proces</span></dt>
+        <dd>
+            <a ui-sref="proces-detail({id:vm.usuarisProces.procesId})">{{vm.usuarisProces.procesId}}</a>
+        </dd>
+        <dt><span data-translate="controlDinersApp.usuarisProces.usuaris">Usuaris</span></dt>
+        <dd>
+            <a ui-sref="usuaris-detail({id:vm.usuarisProces.usuarisId})">{{vm.usuarisProces.usuarisNom}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="usuaris-proces-detail.edit({id:vm.usuarisProces.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

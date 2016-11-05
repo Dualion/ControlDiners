@@ -1,0 +1,24 @@
+{
+    "controlDinersApp": {
+        "usuarisProces" : {
+            "home": {
+                "title": "Usuaris Proces",
+                "createLabel": "Create a new Usuaris Proces",
+                "createOrEditLabel": "Create or edit a Usuaris Proces",
+                "search": "Search for Usuaris Proces"
+            },
+            "created": "A new Usuaris Proces is created with identifier {{ param }}",
+            "updated": "A Usuaris Proces is updated with identifier {{ param }}",
+            "deleted": "A Usuaris Proces is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Usuaris Proces {{ id }}?"
+            },
+            "detail": {
+                "title": "Usuaris Proces"
+            },
+            "diners": "Diners",
+            "proces": "Proces",
+            "usuaris": "Usuaris"
+        }
+    }
+}

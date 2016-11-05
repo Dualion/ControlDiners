@@ -1,0 +1,54 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myUsuarisProcesLabel" data-translate="controlDinersApp.usuarisProces.home.createOrEditLabel">Create or edit a Usuaris Proces</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.usuarisProces.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.usuarisProces.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="controlDinersApp.usuarisProces.diners" for="field_diners">Diners</label>
+            <input type="number" class="form-control" name="diners" id="field_diners"
+                    ng-model="vm.usuarisProces.diners"
+                    required />
+            <div ng-show="editForm.diners.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.diners.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.diners.$error.number" data-translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="controlDinersApp.usuarisProces.proces" for="field_proces">Proces</label>
+            <select class="form-control" id="field_proces" name="proces" ng-model="vm.usuarisProces.procesId" ng-options="proces.id as proces.id for proces in vm.proces"            >
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="controlDinersApp.usuarisProces.usuaris" for="field_usuaris">Usuaris</label>
+            <select class="form-control" id="field_usuaris" name="usuaris" ng-model="vm.usuarisProces.usuarisId" ng-options="usuaris.id as usuaris.nom for usuaris in vm.usuarises"            >
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
