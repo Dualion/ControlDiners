@@ -20,7 +20,7 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'getActiu': {url: '/public/usuaris-proces/actiu', method:'GET', isArray: true}
         });
     }
 })();

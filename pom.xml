@@ -536,9 +536,9 @@
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>jdbc:mysql://localhost:3306/ControlDiners</url>
+                    <url>jdbc:mysql://localhost:3306/controldiners</url>
                     <defaultSchemaName>ControlDiners</defaultSchemaName>
-                    <username>root</username>
+                    <username>dmadmin</username>
                     <password></password>
                     <referenceUrl>hibernate:spring:com.dualion.controldiners.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
                     <verbose>true</verbose>

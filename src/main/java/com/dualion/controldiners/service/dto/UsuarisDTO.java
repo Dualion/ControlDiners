@@ -11,6 +11,8 @@ import java.util.Objects;
  */
 public class UsuarisDTO implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
     private Long id;
 
     @NotNull
@@ -21,7 +23,6 @@ public class UsuarisDTO implements Serializable {
     @Size(min = 5, max = 50)
     private String email;
 
-    @NotNull
     private ZonedDateTime dataInici;
 
     private Boolean actiu;

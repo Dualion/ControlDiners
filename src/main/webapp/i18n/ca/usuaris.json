@@ -2,19 +2,19 @@
     "controlDinersApp": {
         "usuaris" : {
             "home": {
-                "title": "Usuarises",
-                "createLabel": "Create a new Usuaris",
-                "createOrEditLabel": "Create or edit a Usuaris",
+                "title": "Usuaris",
+                "createLabel": "Crear un nou usuari",
+                "createOrEditLabel": "Crear o editar un usuari",
                 "search": "Search for Usuaris"
             },
-            "created": "A new Usuaris is created with identifier {{ param }}",
-            "updated": "A Usuaris is updated with identifier {{ param }}",
-            "deleted": "A Usuaris is deleted with identifier {{ param }}",
+            "created": "Un nou Usuari ha estat creat amb l'identificador {{ param }}",
+            "updated": "Un usuari ha estat actualitzat amb l'identificador {{ param }}",
+            "deleted": "Un usuari ha estat eliminat amb l'identificador {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Usuaris {{ id }}?"
+                "question": "Segur que vol eliminar l'usuari' {{ id }}?"
             },
             "detail": {
-                "title": "Usuaris"
+                "title": "Usuari"
             },
             "nom": "Nom",
             "email": "Email",

@@ -19,7 +19,9 @@
     "jwtSecretKey": "76855495d7eb966f759386341b78a379f0aa8fab",
     "useSass": false,
     "applicationType": "monolith",
-    "testFrameworks": [],
+    "testFrameworks": [
+      "protractor"
+    ],
     "jhiPrefix": "jhi",
     "enableTranslation": true,
     "nativeLanguage": "ca",

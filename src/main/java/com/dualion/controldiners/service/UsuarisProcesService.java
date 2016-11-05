@@ -1,11 +1,12 @@
 package com.dualion.controldiners.service;
 
-import com.dualion.controldiners.service.dto.UsuarisProcesDTO;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.dualion.controldiners.service.dto.UsuarisProcesDTO;
+import com.dualion.controldiners.service.exception.UsuarisProcesException;
 
 /**
  * Service Interface for managing UsuarisProces.
@@ -21,6 +22,14 @@ public interface UsuarisProcesService {
     UsuarisProcesDTO save(UsuarisProcesDTO usuarisProcesDTO);
 
     /**
+     *  Get all the usuarisProces del proces actiu.
+     *  
+     *  @return the list of entities
+     *  @throws UsuarisProcesException 
+     */
+    List<UsuarisProcesDTO> findAllProcesActiu() throws UsuarisProcesException;
+    
+    /**
      *  Get all the usuarisProces.
      *  
      *  @param pageable the pagination information
@@ -29,6 +38,14 @@ public interface UsuarisProcesService {
     Page<UsuarisProcesDTO> findAll(Pageable pageable);
 
     /**
+     *  Get all the usuarisProces del proces actiu.
+     *  
+     *  @param pageable the pagination information
+     *  @return the list of entities
+     */
+	public List<UsuarisProcesDTO> findAllProcesId(Long procesId);
+    
+    /**
      *  Get the "id" usuarisProces.
      *
      *  @param id the id of the entity
@@ -36,6 +53,14 @@ public interface UsuarisProcesService {
      */
     UsuarisProcesDTO findOne(Long id);
 
+    /**
+     *  Get the usuarisProces by user Id and proces Id.
+     *
+     *  @param id of usuari and proces.
+     *  @return the entity
+     */
+    UsuarisProcesDTO findOneByUserIdAndProcesId(Long usuariId, Long procesId);
+    
     /**
      *  Delete the "id" usuarisProces.
      *

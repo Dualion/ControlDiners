@@ -7,7 +7,7 @@
     Pot.$inject = ['$resource', 'DateUtils'];
 
     function Pot ($resource, DateUtils) {
-        var resourceUrl =  'api/pots/:id';
+        var resourceUrl =  'public/pots/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
@@ -21,7 +21,20 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'getLast': {
+            	method: 'GET',
+            	url: 'public/pots/last',
+                /*transformResponse: function (data) {
+                    if (data) {
+                    	console.log(data);
+                        data = angular.fromJson(data);
+                        data.data = DateUtils.convertDateTimeFromServer(data.data);
+                    }
+                    return data;
+                }*/
+            },
+            'pagament': { url: 'api/pots/pagament', method: 'POST' },
+            'extreure': {url: 'api/pots/extreure', method: 'POST' }
         });
     }
 })();

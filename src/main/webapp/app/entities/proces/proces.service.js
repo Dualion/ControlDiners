@@ -21,7 +21,9 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'getProcesIsActive': {url: 'public/proces/actiu'},
+            'crearProces': {url: 'api/proces', method: 'POST'},
+            'acabarProces': {url: 'api/proces/terminate', method: 'POST'}
         });
     }
 })();

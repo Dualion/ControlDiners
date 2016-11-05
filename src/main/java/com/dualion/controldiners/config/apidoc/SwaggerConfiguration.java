@@ -2,6 +2,7 @@ package com.dualion.controldiners.config.apidoc;
 
 import com.dualion.controldiners.config.Constants;
 import com.dualion.controldiners.config.JHipsterProperties;
+import com.google.common.base.Predicate;
 
 import java.util.Date;
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static springfox.documentation.builders.PathSelectors.regex;
+import static springfox.documentation.builders.PathSelectors.*;
+import static com.google.common.base.Predicates.*;
 
 /**
  * Springfox Swagger configuration.
@@ -34,7 +37,8 @@ public class SwaggerConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(SwaggerConfiguration.class);
 
-    public static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
+    public static final String DEFAULT_INCLUDE_PATTERN_API = "/api/.*";
+    public static final String DEFAULT_INCLUDE_PATTERN_PUBLIC = "/public/.*";
 
     /**
      * Swagger Springfox configuration.
@@ -70,10 +74,17 @@ public class SwaggerConfiguration {
             .directModelSubstitute(java.time.ZonedDateTime.class, Date.class)
             .directModelSubstitute(java.time.LocalDateTime.class, Date.class)
             .select()
-            .paths(regex(DEFAULT_INCLUDE_PATTERN))
+            .paths(paths())
             .build();
         watch.stop();
         log.debug("Started Swagger in {} ms", watch.getTotalTimeMillis());
         return docket;
+    }
+    
+  //Here is an example where we select any api that matches one of these paths
+    private Predicate<String> paths() {
+      return or(
+          regex(DEFAULT_INCLUDE_PATTERN_API),
+          regex(DEFAULT_INCLUDE_PATTERN_PUBLIC));
     }
 }

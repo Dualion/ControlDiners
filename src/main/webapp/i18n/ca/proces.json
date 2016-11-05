@@ -3,8 +3,8 @@
         "proces" : {
             "home": {
                 "title": "Proces",
-                "createLabel": "Create a new Proces",
-                "createOrEditLabel": "Create or edit a Proces",
+                "createLabel": "Crear un nou Proces",
+                "createOrEditLabel": "Crear o editar un Proces",
                 "search": "Search for Proces"
             },
             "created": "A new Proces is created with identifier {{ param }}",

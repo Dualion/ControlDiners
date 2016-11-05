@@ -3,15 +3,15 @@
         "usuarisProces" : {
             "home": {
                 "title": "Usuaris Proces",
-                "createLabel": "Create a new Usuaris Proces",
-                "createOrEditLabel": "Create or edit a Usuaris Proces",
+                "createLabel": "Crear un Usuaris Proces",
+                "createOrEditLabel": "Crear o editar Usuaris Proces",
                 "search": "Search for Usuaris Proces"
             },
-            "created": "A new Usuaris Proces is created with identifier {{ param }}",
-            "updated": "A Usuaris Proces is updated with identifier {{ param }}",
-            "deleted": "A Usuaris Proces is deleted with identifier {{ param }}",
+            "created": "Un nou Usuaris Proces ha estat creat amb l''identificador {{ param }}",
+            "updated": "Un Usuaris Proces ha estat actualitzat amb l''identificador {{ param }}",
+            "deleted": "Un Usuaris Proces ha estat eliminat amb l''identificador {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Usuaris Proces {{ id }}?"
+                "question": "Segur que vol eliminar l'usuari Proces {{ id }}?"
             },
             "detail": {
                 "title": "Usuaris Proces"

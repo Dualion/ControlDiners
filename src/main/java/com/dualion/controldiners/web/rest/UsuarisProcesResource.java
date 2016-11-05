@@ -5,6 +5,8 @@ import com.dualion.controldiners.service.UsuarisProcesService;
 import com.dualion.controldiners.web.rest.util.HeaderUtil;
 import com.dualion.controldiners.web.rest.util.PaginationUtil;
 import com.dualion.controldiners.service.dto.UsuarisProcesDTO;
+import com.dualion.controldiners.service.exception.UsuarisProcesException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -27,56 +29,34 @@ import java.util.stream.Collectors;
  * REST controller for managing UsuarisProces.
  */
 @RestController
-@RequestMapping("/api")
 public class UsuarisProcesResource {
 
-    private final Logger log = LoggerFactory.getLogger(UsuarisProcesResource.class);
-        
+	private final Logger log = LoggerFactory.getLogger(UsuarisProcesResource.class);
+    
     @Inject
     private UsuarisProcesService usuarisProcesService;
 
     /**
-     * POST  /usuaris-proces : Create a new usuarisProces.
+     * GET  /usuaris-proces/actiu : get all the usuarisProces del proces acriu.
      *
-     * @param usuarisProcesDTO the usuarisProcesDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new usuarisProcesDTO, or with status 400 (Bad Request) if the usuarisProces has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of usuarisProces in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @PostMapping("/usuaris-proces")
+    @GetMapping("/public/usuaris-proces/actiu")
     @Timed
-    public ResponseEntity<UsuarisProcesDTO> createUsuarisProces(@Valid @RequestBody UsuarisProcesDTO usuarisProcesDTO) throws URISyntaxException {
-        log.debug("REST request to save UsuarisProces : {}", usuarisProcesDTO);
-        if (usuarisProcesDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("usuarisProces", "idexists", "A new usuarisProces cannot already have an ID")).body(null);
-        }
-        UsuarisProcesDTO result = usuarisProcesService.save(usuarisProcesDTO);
-        return ResponseEntity.created(new URI("/api/usuaris-proces/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("usuarisProces", result.getId().toString()))
-            .body(result);
+    public ResponseEntity<List<UsuarisProcesDTO>> getAllUsuarisProcesActiu()
+        throws URISyntaxException {
+        log.debug("REST request to get a page of UsuarisProces");
+        List<UsuarisProcesDTO> list;
+		try {
+			list = usuarisProcesService.findAllProcesActiu();
+		} catch (UsuarisProcesException e) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("usuarisProces", "procesnotactive", "No hi ha cap procés actiu")).body(null);
+		}
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
-
-    /**
-     * PUT  /usuaris-proces : Updates an existing usuarisProces.
-     *
-     * @param usuarisProcesDTO the usuarisProcesDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated usuarisProcesDTO,
-     * or with status 400 (Bad Request) if the usuarisProcesDTO is not valid,
-     * or with status 500 (Internal Server Error) if the usuarisProcesDTO couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/usuaris-proces")
-    @Timed
-    public ResponseEntity<UsuarisProcesDTO> updateUsuarisProces(@Valid @RequestBody UsuarisProcesDTO usuarisProcesDTO) throws URISyntaxException {
-        log.debug("REST request to update UsuarisProces : {}", usuarisProcesDTO);
-        if (usuarisProcesDTO.getId() == null) {
-            return createUsuarisProces(usuarisProcesDTO);
-        }
-        UsuarisProcesDTO result = usuarisProcesService.save(usuarisProcesDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("usuarisProces", usuarisProcesDTO.getId().toString()))
-            .body(result);
-    }
-
+    
     /**
      * GET  /usuaris-proces : get all the usuarisProces.
      *
@@ -84,7 +64,7 @@ public class UsuarisProcesResource {
      * @return the ResponseEntity with status 200 (OK) and the list of usuarisProces in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @GetMapping("/usuaris-proces")
+    @GetMapping("/public/usuaris-proces")
     @Timed
     public ResponseEntity<List<UsuarisProcesDTO>> getAllUsuarisProces(Pageable pageable)
         throws URISyntaxException {
@@ -100,7 +80,7 @@ public class UsuarisProcesResource {
      * @param id the id of the usuarisProcesDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the usuarisProcesDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/usuaris-proces/{id}")
+    @GetMapping("/public/usuaris-proces/{id}")
     @Timed
     public ResponseEntity<UsuarisProcesDTO> getUsuarisProces(@PathVariable Long id) {
         log.debug("REST request to get UsuarisProces : {}", id);
@@ -111,19 +91,4 @@ public class UsuarisProcesResource {
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
-    /**
-     * DELETE  /usuaris-proces/:id : delete the "id" usuarisProces.
-     *
-     * @param id the id of the usuarisProcesDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @DeleteMapping("/usuaris-proces/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteUsuarisProces(@PathVariable Long id) {
-        log.debug("REST request to delete UsuarisProces : {}", id);
-        usuarisProcesService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("usuarisProces", id.toString())).build();
-    }
-
 }

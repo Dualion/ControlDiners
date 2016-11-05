@@ -1,11 +1,10 @@
 package com.dualion.controldiners.service;
 
-import com.dualion.controldiners.service.dto.QuantitatDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.dualion.controldiners.service.dto.QuantitatDTO;
+import com.dualion.controldiners.service.exception.QuantitatException;
 
 /**
  * Service Interface for managing Quantitat.
@@ -17,8 +16,9 @@ public interface QuantitatService {
      *
      * @param quantitatDTO the entity to save
      * @return the persisted entity
+     * @throws QuantitatException 
      */
-    QuantitatDTO save(QuantitatDTO quantitatDTO);
+    QuantitatDTO save(QuantitatDTO quantitatDTO) throws QuantitatException;
 
     /**
      *  Get all the quantitats.
@@ -36,6 +36,14 @@ public interface QuantitatService {
      */
     QuantitatDTO findOne(Long id);
 
+    /**
+     *  Get the quantitat activa.
+     *
+     *  @return the entity
+     * @throws QuantitatException 
+     */
+    QuantitatDTO findActiva() throws QuantitatException;
+    
     /**
      *  Delete the "id" quantitat.
      *

@@ -13,7 +13,6 @@
             parent: 'entity',
             url: '/pot?page&sort&search',
             data: {
-                authorities: ['ROLE_USER'],
                 pageTitle: 'controlDinersApp.pot.home.title'
             },
             views: {
@@ -29,7 +28,7 @@
                     squash: true
                 },
                 sort: {
-                    value: 'id,asc',
+                    value: 'id,desc',
                     squash: true
                 },
                 search: null

@@ -5,6 +5,10 @@ import com.dualion.controldiners.service.ProcesService;
 import com.dualion.controldiners.web.rest.util.HeaderUtil;
 import com.dualion.controldiners.web.rest.util.PaginationUtil;
 import com.dualion.controldiners.service.dto.ProcesDTO;
+import com.dualion.controldiners.service.exception.ProcesException;
+import com.dualion.controldiners.service.exception.QuantitatException;
+import com.dualion.controldiners.service.exception.UsuarisProcesException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,8 +21,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,53 +32,58 @@ import java.util.stream.Collectors;
  * REST controller for managing Proces.
  */
 @RestController
-@RequestMapping("/api")
 public class ProcesResource {
 
-    private final Logger log = LoggerFactory.getLogger(ProcesResource.class);
-        
+	private final Logger log = LoggerFactory.getLogger(ProcesResource.class);
+    
     @Inject
     private ProcesService procesService;
 
     /**
      * POST  /proces : Create a new proces.
      *
-     * @param procesDTO the procesDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new procesDTO, or with status 400 (Bad Request) if the proces has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/proces")
+    @PostMapping("/api/proces")
     @Timed
-    public ResponseEntity<ProcesDTO> createProces(@RequestBody ProcesDTO procesDTO) throws URISyntaxException {
-        log.debug("REST request to save Proces : {}", procesDTO);
-        if (procesDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("proces", "idexists", "A new proces cannot already have an ID")).body(null);
-        }
-        ProcesDTO result = procesService.save(procesDTO);
+    public ResponseEntity<ProcesDTO> createProces() throws URISyntaxException {
+        log.debug("REST request to save Proces ");
+
+        ProcesDTO result;
+		try {
+			result = procesService.save();
+		} catch (ProcesException e) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("proces", "procesactive", e.getMessage())).body(null);
+		} catch (QuantitatException e) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("quantitat", "quantitatactive", e.getMessage())).body(null);
+		}
         return ResponseEntity.created(new URI("/api/proces/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("proces", result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /proces : Updates an existing proces.
+     * POST  /proces/terminate : Terminate active proces.
      *
-     * @param procesDTO the procesDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated procesDTO,
-     * or with status 400 (Bad Request) if the procesDTO is not valid,
-     * or with status 500 (Internal Server Error) if the procesDTO couldnt be updated
+     * @return the ResponseEntity with status 201 (Created) and with body the new procesDTO, or with status 400 (Bad Request) if the proces has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/proces")
+    @PostMapping("/api/proces/terminate")
     @Timed
-    public ResponseEntity<ProcesDTO> updateProces(@RequestBody ProcesDTO procesDTO) throws URISyntaxException {
-        log.debug("REST request to update Proces : {}", procesDTO);
-        if (procesDTO.getId() == null) {
-            return createProces(procesDTO);
-        }
-        ProcesDTO result = procesService.save(procesDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("proces", procesDTO.getId().toString()))
+    public ResponseEntity<?> terminateProces() throws URISyntaxException {
+        log.debug("REST request to terminate active Proces ");
+        ProcesDTO result;
+		try {
+			result = procesService.acabarProcesActiu();
+		} catch (UsuarisProcesException e) {
+			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("proces", "usuarisnopagats", e.getMessage())).build();
+		} catch (ProcesException e) {
+			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("proces", "procesinactiu", e.getMessage())).build();
+		}
+        
+        return ResponseEntity.created(new URI("/api/proces/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("proces", result.getId().toString()))
             .body(result);
     }
 
@@ -83,7 +94,7 @@ public class ProcesResource {
      * @return the ResponseEntity with status 200 (OK) and the list of proces in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @GetMapping("/proces")
+    @GetMapping("/public/proces")
     @Timed
     public ResponseEntity<List<ProcesDTO>> getAllProces(Pageable pageable)
         throws URISyntaxException {
@@ -99,7 +110,7 @@ public class ProcesResource {
      * @param id the id of the procesDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the procesDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/proces/{id}")
+    @GetMapping("/public/proces/{id}")
     @Timed
     public ResponseEntity<ProcesDTO> getProces(@PathVariable Long id) {
         log.debug("REST request to get Proces : {}", id);
@@ -112,17 +123,19 @@ public class ProcesResource {
     }
 
     /**
-     * DELETE  /proces/:id : delete the "id" proces.
+     * GET  /proces/actiu : get the active proces.
      *
-     * @param id the id of the procesDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @return the ResponseEntity with status 200 (OK) and with body the procesDTO, or with status 404 (Not Found)
      */
-    @DeleteMapping("/proces/{id}")
+    @GetMapping("/public/proces/actiu")
     @Timed
-    public ResponseEntity<Void> deleteProces(@PathVariable Long id) {
-        log.debug("REST request to delete Proces : {}", id);
-        procesService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("proces", id.toString())).build();
+    public ResponseEntity<Map<String, Boolean>> getQuantitatActiva() {
+        log.debug("REST request to get Quantitat Activa");
+        ProcesDTO procesDTO = procesService.findActiva();
+        if(procesDTO != null) {
+        	return ResponseEntity.ok().body(Collections.singletonMap("actiu", true));
+        } else {
+        	return ResponseEntity.ok().body(Collections.singletonMap("actiu", false));
+        }
     }
-
 }

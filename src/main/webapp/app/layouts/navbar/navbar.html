@@ -33,27 +33,15 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active">
-                            <a ui-sref="quantitat" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span data-translate="global.menu.entities.quantitat">Quantitat</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active">
-                            <a ui-sref="usuaris" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span data-translate="global.menu.entities.usuaris">Usuaris</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active">
-                            <a ui-sref="pot" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span data-translate="global.menu.entities.pot">Pot</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active">
                             <a ui-sref="proces" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.proces">Proces</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="quantitat" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="global.menu.entities.quantitat">Quantitat</span>
                             </a>
                         </li>
                         <li ui-sref-active="active">
@@ -64,6 +52,18 @@
                         </li>
                         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                     </ul>
+                </li>
+                <li ui-sref-active="active" ng-switch-when="true">
+                    <a ui-sref="usuaris" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;
+                        <span class="hidden-sm" data-translate="global.menu.entities.usuaris">Usuaris</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active" >
+                    <a ui-sref="pot" ng-click="vm.collapseNavbar()">
+                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;
+                        <span class="hidden-sm" data-translate="global.menu.entities.pot">Pot</span>
+                    </a>
                 </li>
                 <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">

@@ -3,6 +3,10 @@ package com.dualion.controldiners.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import org.hibernate.validator.constraints.Email;
+import org.springframework.data.annotation.CreatedDate;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -26,13 +30,15 @@ public class Usuaris implements Serializable {
     private String nom;
 
     @NotNull
+    @Email
     @Size(min = 5, max = 50)
     @Column(name = "email", length = 50, nullable = false)
     private String email;
 
     @NotNull
+    @CreatedDate
     @Column(name = "data_inici", nullable = false)
-    private ZonedDateTime dataInici;
+    private ZonedDateTime dataInici = ZonedDateTime.now();
 
     @Column(name = "actiu")
     private Boolean actiu;

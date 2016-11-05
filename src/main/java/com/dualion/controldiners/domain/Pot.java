@@ -3,6 +3,9 @@ package com.dualion.controldiners.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import org.springframework.data.annotation.CreatedDate;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -25,8 +28,9 @@ public class Pot implements Serializable {
     private Float dinersTotals;
 
     @NotNull
+    @CreatedDate
     @Column(name = "data", nullable = false)
-    private ZonedDateTime data;
+    private ZonedDateTime data = ZonedDateTime.now();
 
     @NotNull
     @Size(min = 3, max = 100)

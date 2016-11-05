@@ -9,6 +9,9 @@ var gulp = require('gulp'),
     ngConstant = require('gulp-ng-constant'),
     rename = require('gulp-rename'),
     eslint = require('gulp-eslint'),
+    argv = require('yargs').argv,
+    gutil = require('gulp-util'),
+    protractor = require('gulp-protractor').protractor,
     del = require('del'),
     runSequence = require('run-sequence'),
     browserSync = require('browser-sync'),
@@ -147,6 +150,24 @@ gulp.task('test', ['inject:test', 'ngconstant:dev'], function (done) {
     }, done).start();
 });
 
+/* to run individual suites pass `gulp itest --suite suiteName` */
+gulp.task('protractor', function () {
+    var configObj = {
+        configFile: config.test + 'protractor.conf.js'
+    };
+    if (argv.suite) {
+        configObj['args'] = ['--suite', argv.suite];
+    }
+    return gulp.src([])
+        .pipe(plumber({errorHandler: handleErrors}))
+        .pipe(protractor(configObj))
+        .on('error', function () {
+            gutil.log('E2E Tests failed');
+            process.exit(1);
+        });
+});
+
+gulp.task('itest', ['protractor']);
 
 gulp.task('watch', function () {
     gulp.watch('bower.json', ['install']);

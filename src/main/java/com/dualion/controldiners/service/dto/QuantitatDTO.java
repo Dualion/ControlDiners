@@ -10,12 +10,13 @@ import java.util.Objects;
  */
 public class QuantitatDTO implements Serializable {
 
-    private Long id;
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
 
     @NotNull
     private Float diners;
 
-    @NotNull
     private Boolean actiu;
 
 

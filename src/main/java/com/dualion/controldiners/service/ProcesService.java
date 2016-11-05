@@ -1,11 +1,12 @@
 package com.dualion.controldiners.service;
 
-import com.dualion.controldiners.service.dto.ProcesDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.dualion.controldiners.service.dto.ProcesDTO;
+import com.dualion.controldiners.service.exception.ProcesException;
+import com.dualion.controldiners.service.exception.QuantitatException;
+import com.dualion.controldiners.service.exception.UsuarisProcesException;
 
 /**
  * Service Interface for managing Proces.
@@ -15,10 +16,19 @@ public interface ProcesService {
     /**
      * Save a proces.
      *
-     * @param procesDTO the entity to save
      * @return the persisted entity
+     * @throws ProcesException 
+     * @throws QuantitatException 
      */
-    ProcesDTO save(ProcesDTO procesDTO);
+    ProcesDTO save() throws ProcesException, QuantitatException;
+    
+    /**
+     * Acabar proces
+     * 
+     * @throws UsuarisProcesException 
+     * @throws ProcesException 
+     */
+    ProcesDTO acabarProcesActiu() throws UsuarisProcesException, ProcesException;
 
     /**
      *  Get all the proces.
@@ -35,6 +45,13 @@ public interface ProcesService {
      *  @return the entity
      */
     ProcesDTO findOne(Long id);
+    
+    /**
+     *  Get proces actiu.
+     *
+     *  @return the entity 
+     */
+	ProcesDTO findActiva();
 
     /**
      *  Delete the "id" proces.

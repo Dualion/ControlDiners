@@ -1,11 +1,12 @@
 package com.dualion.controldiners.service;
 
-import com.dualion.controldiners.service.dto.UsuarisDTO;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.dualion.controldiners.domain.Usuaris;
+import com.dualion.controldiners.service.dto.UsuarisDTO;
 
 /**
  * Service Interface for managing Usuaris.
@@ -20,6 +21,13 @@ public interface UsuarisService {
      */
     UsuarisDTO save(UsuarisDTO usuarisDTO);
 
+    /**
+     *  Get all active usuarises.
+     *  
+     *  @return the list of entities
+     */
+    List<Usuaris> findAllActiveUser();
+    
     /**
      *  Get all the usuarises.
      *  
@@ -37,9 +45,17 @@ public interface UsuarisService {
     UsuarisDTO findOne(Long id);
 
     /**
-     *  Delete the "id" usuaris.
+     *  Desactiva the usuaris by id.
      *
      *  @param id the id of the entity
      */
-    void delete(Long id);
+    public void desactiva(Long id);
+    
+    /**
+     *  Activa the usuaris by id.
+     *
+     *  @param id the id of the entity
+     */
+    public void activa(Long id);
+    
 }

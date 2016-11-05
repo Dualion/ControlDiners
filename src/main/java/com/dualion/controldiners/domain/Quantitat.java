@@ -23,7 +23,6 @@ public class Quantitat implements Serializable {
     @Column(name = "diners", nullable = false)
     private Float diners;
 
-    @NotNull
     @Column(name = "actiu", nullable = false)
     private Boolean actiu;
 

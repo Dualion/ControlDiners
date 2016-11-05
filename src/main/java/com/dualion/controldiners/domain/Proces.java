@@ -2,6 +2,9 @@ package com.dualion.controldiners.domain;
 
 
 import javax.persistence.*;
+
+import org.springframework.data.annotation.CreatedDate;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -19,11 +22,12 @@ public class Proces implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "data_inici")
-    private ZonedDateTime dataInici;
-
     @Column(name = "estat")
     private Boolean estat;
+    
+    @CreatedDate
+    @Column(name = "data_inici")
+    private ZonedDateTime dataInici = ZonedDateTime.now();;
 
     public Long getId() {
         return id;

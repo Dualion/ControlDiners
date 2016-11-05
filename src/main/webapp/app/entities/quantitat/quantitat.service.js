@@ -7,7 +7,7 @@
     Quantitat.$inject = ['$resource'];
 
     function Quantitat ($resource) {
-        var resourceUrl =  'api/quantitats/:id';
+        var resourceUrl =  'public/quantitats/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
@@ -20,7 +20,8 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'getActiva': {url: 'public/quantitats/activa'},
+            'save': {url: 'api/quantitats', method:'POST' }
         });
     }
 })();

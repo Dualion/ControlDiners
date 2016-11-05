@@ -5,6 +5,8 @@ import com.dualion.controldiners.service.QuantitatService;
 import com.dualion.controldiners.web.rest.util.HeaderUtil;
 import com.dualion.controldiners.web.rest.util.PaginationUtil;
 import com.dualion.controldiners.service.dto.QuantitatDTO;
+import com.dualion.controldiners.service.exception.QuantitatException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -27,11 +29,10 @@ import java.util.stream.Collectors;
  * REST controller for managing Quantitat.
  */
 @RestController
-@RequestMapping("/api")
 public class QuantitatResource {
 
-    private final Logger log = LoggerFactory.getLogger(QuantitatResource.class);
-        
+	private final Logger log = LoggerFactory.getLogger(QuantitatResource.class);
+    
     @Inject
     private QuantitatService quantitatService;
 
@@ -42,38 +43,21 @@ public class QuantitatResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new quantitatDTO, or with status 400 (Bad Request) if the quantitat has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/quantitats")
+    @PostMapping("/api/quantitats")
     @Timed
     public ResponseEntity<QuantitatDTO> createQuantitat(@Valid @RequestBody QuantitatDTO quantitatDTO) throws URISyntaxException {
         log.debug("REST request to save Quantitat : {}", quantitatDTO);
         if (quantitatDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("quantitat", "idexists", "A new quantitat cannot already have an ID")).body(null);
         }
-        QuantitatDTO result = quantitatService.save(quantitatDTO);
+        QuantitatDTO result;
+		try {
+			result = quantitatService.save(quantitatDTO);
+		} catch (QuantitatException e) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("quantitat", "procesactiu", e.getMessage())).body(null);
+		}
         return ResponseEntity.created(new URI("/api/quantitats/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("quantitat", result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * PUT  /quantitats : Updates an existing quantitat.
-     *
-     * @param quantitatDTO the quantitatDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated quantitatDTO,
-     * or with status 400 (Bad Request) if the quantitatDTO is not valid,
-     * or with status 500 (Internal Server Error) if the quantitatDTO couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/quantitats")
-    @Timed
-    public ResponseEntity<QuantitatDTO> updateQuantitat(@Valid @RequestBody QuantitatDTO quantitatDTO) throws URISyntaxException {
-        log.debug("REST request to update Quantitat : {}", quantitatDTO);
-        if (quantitatDTO.getId() == null) {
-            return createQuantitat(quantitatDTO);
-        }
-        QuantitatDTO result = quantitatService.save(quantitatDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("quantitat", quantitatDTO.getId().toString()))
             .body(result);
     }
 
@@ -84,7 +68,7 @@ public class QuantitatResource {
      * @return the ResponseEntity with status 200 (OK) and the list of quantitats in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @GetMapping("/quantitats")
+    @GetMapping("/public/quantitats")
     @Timed
     public ResponseEntity<List<QuantitatDTO>> getAllQuantitats(Pageable pageable)
         throws URISyntaxException {
@@ -100,7 +84,7 @@ public class QuantitatResource {
      * @param id the id of the quantitatDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the quantitatDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/quantitats/{id}")
+    @GetMapping("/public/quantitats/{id}")
     @Timed
     public ResponseEntity<QuantitatDTO> getQuantitat(@PathVariable Long id) {
         log.debug("REST request to get Quantitat : {}", id);
@@ -113,17 +97,24 @@ public class QuantitatResource {
     }
 
     /**
-     * DELETE  /quantitats/:id : delete the "id" quantitat.
+     * GET  /quantitats/activa : get the active quantitat.
      *
-     * @param id the id of the quantitatDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @return the ResponseEntity with status 200 (OK) and with body the quantitatDTO, or with status 404 (Not Found)
      */
-    @DeleteMapping("/quantitats/{id}")
+    @GetMapping("/public/quantitats/activa")
     @Timed
-    public ResponseEntity<Void> deleteQuantitat(@PathVariable Long id) {
-        log.debug("REST request to delete Quantitat : {}", id);
-        quantitatService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("quantitat", id.toString())).build();
+    public ResponseEntity<QuantitatDTO> getQuantitatActiva() {
+        log.debug("REST request to get Quantitat Activa");
+        QuantitatDTO quantitatDTO;
+		try {
+			quantitatDTO = quantitatService.findActiva();
+		} catch (QuantitatException e) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("quantitat", "actiunoexist", e.getMessage())).body(null);
+		}
+        return Optional.ofNullable(quantitatDTO)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
 }

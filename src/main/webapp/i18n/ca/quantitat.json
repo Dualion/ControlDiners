@@ -3,8 +3,8 @@
         "quantitat" : {
             "home": {
                 "title": "Quantitats",
-                "createLabel": "Create a new Quantitat",
-                "createOrEditLabel": "Create or edit a Quantitat",
+                "createLabel": "Crear una nova Quantitat",
+                "createOrEditLabel": "Crear o editar una Quantitat",
                 "search": "Search for Quantitat"
             },
             "created": "A new Quantitat is created with identifier {{ param }}",

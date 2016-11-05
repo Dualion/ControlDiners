@@ -19,4 +19,13 @@ public interface ProcesMapper {
     Proces procesDTOToProces(ProcesDTO procesDTO);
 
     List<Proces> procesDTOsToProces(List<ProcesDTO> procesDTOs);
+    
+    default Proces procesFromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Proces proces = new Proces();
+        proces.setId(id);
+        return proces;
+    }
 }

@@ -1,18 +1,7 @@
 <div>
     <h2 data-translate="controlDinersApp.pot.home.title">Pots</h2>
     <jhi-alert></jhi-alert>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="pot.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span  data-translate="controlDinersApp.pot.home.createLabel">
-                        Create new Pot
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>
+    <canvas class="chart chart-line" chart-data="vm.values" chart-labels="vm.labels" chart-series="vm.series"></canvas> 
     <br/>
     <div class="table-responsive">
         <table class="jh-table table table-striped">
@@ -38,18 +27,6 @@
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="pot.edit({id:pot.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="pot.delete({id:pot.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
                             </button>
                         </div>
                     </td>

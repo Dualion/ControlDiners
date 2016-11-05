@@ -64,12 +64,12 @@
                     "strength": "Fortalesa de la contrasenya:"
                 },
                 "confirmpassword": {
-                    "required": "És necessari confirmar la seva contrasenya.",
+                    "required": "Ã‰s necessari confirmar la seva contrasenya.",
                     "minlength": "La confirmació de la seva contrasenya ha de tenir, com a mínim, 5 caràcters",
                     "maxlength": "La confirmació de la seva contrasenya no pot tenir més de 50 caràcters"
                 },
                 "email": {
-                    "required": "És necessari el seu compte de correu electrònic.",
+                    "required": "Ã‰s necessari el seu compte de correu electrònic.",
                     "invalid": "El seu compte de correu electrònic és invàlid.",
                     "minlength": "El seu compte de correu electrònic ha de tenir, com a mínim, 5 caràcters",
                     "maxlength": "El seu compte de correu electrònic no pot tenir més de 50 caràcters"

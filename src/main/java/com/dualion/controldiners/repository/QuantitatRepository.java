@@ -1,6 +1,7 @@
 package com.dualion.controldiners.repository;
 
 import com.dualion.controldiners.domain.Quantitat;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.*;
 
@@ -12,4 +13,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface QuantitatRepository extends JpaRepository<Quantitat,Long> {
 
+	Optional<Quantitat> findFirstByActiu(Boolean actiu);
+	
 }

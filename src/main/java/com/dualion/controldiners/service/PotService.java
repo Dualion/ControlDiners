@@ -1,11 +1,15 @@
 package com.dualion.controldiners.service;
 
-import com.dualion.controldiners.service.dto.PotDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.dualion.controldiners.service.dto.PotDTO;
+import com.dualion.controldiners.service.exception.PotException;
+import com.dualion.controldiners.service.exception.ProcesException;
+import com.dualion.controldiners.service.exception.QuantitatException;
+import com.dualion.controldiners.service.exception.UsuarisProcesException;
+import com.dualion.controldiners.web.rest.vm.ExtreureVM;
+import com.dualion.controldiners.web.rest.vm.PagamentVM;
 
 /**
  * Service Interface for managing Pot.
@@ -13,13 +17,25 @@ import java.util.List;
 public interface PotService {
 
     /**
-     * Save a pot.
+     * Save pagament.
      *
-     * @param potDTO the entity to save
+     * @param usuariId
      * @return the persisted entity
+     * @throws QuantitatException 
+     * @throws ProcesException 
+     * @throws UsuarisProcesException 
      */
-    PotDTO save(PotDTO potDTO);
+    PotDTO savePagament(PagamentVM pagamentVM) throws QuantitatException, ProcesException, UsuarisProcesException;
 
+    /**
+     * Save extreure diners.
+     *
+     * @param diners
+     * @return the persisted entity 
+     * @throws PotException 
+     */
+	PotDTO saveExtreure(ExtreureVM extreureVM) throws PotException;
+    
     /**
      *  Get all the pots.
      *  
@@ -37,9 +53,9 @@ public interface PotService {
     PotDTO findOne(Long id);
 
     /**
-     *  Delete the "id" pot.
+     *  Get last pot.
      *
-     *  @param id the id of the entity
-     */
-    void delete(Long id);
+     *  @return the entity
+     */ 
+    PotDTO findLast();
 }

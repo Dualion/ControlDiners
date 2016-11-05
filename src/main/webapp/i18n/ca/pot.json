@@ -2,9 +2,9 @@
     "controlDinersApp": {
         "pot" : {
             "home": {
-                "title": "Pots",
-                "createLabel": "Create a new Pot",
-                "createOrEditLabel": "Create or edit a Pot",
+                "title": "Pot",
+                "createLabel": "Crear un nou registre al Pot",
+                "createOrEditLabel": "Crear o editar el Pot",
                 "search": "Search for Pot"
             },
             "created": "A new Pot is created with identifier {{ param }}",
@@ -18,7 +18,7 @@
             },
             "dinersTotals": "Diners Totals",
             "data": "Data",
-            "descripcio": "Descripcio"
+            "descripcio": "Descripció"
         }
     }
 }
