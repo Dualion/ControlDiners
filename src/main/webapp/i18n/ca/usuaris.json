@@ -1,0 +1,25 @@
+{
+    "controlDinersApp": {
+        "usuaris" : {
+            "home": {
+                "title": "Usuarises",
+                "createLabel": "Create a new Usuaris",
+                "createOrEditLabel": "Create or edit a Usuaris",
+                "search": "Search for Usuaris"
+            },
+            "created": "A new Usuaris is created with identifier {{ param }}",
+            "updated": "A Usuaris is updated with identifier {{ param }}",
+            "deleted": "A Usuaris is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Usuaris {{ id }}?"
+            },
+            "detail": {
+                "title": "Usuaris"
+            },
+            "nom": "Nom",
+            "email": "Email",
+            "dataInici": "Data Inici",
+            "actiu": "Actiu"
+        }
+    }
+}
