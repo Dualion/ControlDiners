@@ -9,6 +9,7 @@
                 "main": "Entitats",
                 "quantitat": "Quantitat",
                 "usuaris": "Usuaris",
+                "pot": "Pot",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
