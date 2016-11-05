@@ -10,6 +10,7 @@
                 "quantitat": "Quantitat",
                 "usuaris": "Usuaris",
                 "pot": "Pot",
+                "proces": "Proces",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
