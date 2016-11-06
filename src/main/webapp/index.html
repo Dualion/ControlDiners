@@ -16,6 +16,7 @@
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
+    <link rel="stylesheet" href="content/css/footer.css">
     <!-- endbuild -->
 </head>
 <body ng-app="controlDinersApp" ng-strict-di>
@@ -29,9 +30,17 @@
             <!-- Angular views -->
         </div>
 
-        <div class="footer" ng-cloak>
+        <!-- <div class="footer" ng-cloak>
             <p data-translate="footer">This is your footer</p>
-        </div>
+        </div> -->
+        <div class="well site-footer__row--sub clearfix" ng-cloak>
+			<div class="centered gd-pad link-text">
+				<p class="dualion-copyright">
+					<a href="http://dualion.com">© 2016 <strong>Dualion</strong></a>
+				</p>
+				<a href="#" class="back-to-top">Home</a>
+			</div>
+		</div>
     </div>
 
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
