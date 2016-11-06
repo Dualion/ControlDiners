@@ -9,9 +9,9 @@
                 "main": "Entitats",
                 "quantitat": "Quantitat",
                 "usuaris": "Usuaris",
-                "pot": "Pot",
-                "proces": "Proces",
-                "usuarisProces": "Usuaris Proces",
+                "proces": "Procés",
+                "usuarisProces": "Usuaris del Proces",
+                "dinersPot": "Diners del Pot",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

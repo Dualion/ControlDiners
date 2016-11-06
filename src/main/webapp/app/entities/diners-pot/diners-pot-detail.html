@@ -1,0 +1,31 @@
+
+<div>
+    <h2><span data-translate="controlDinersApp.dinersPot.detail.title">Diners Pot</span> {{vm.dinersPot.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="controlDinersApp.dinersPot.dinersTotals">Diners Totals</span></dt>
+        <dd>
+            <span>{{vm.dinersPot.dinersTotals}}</span>
+        </dd>
+        <dt><span data-translate="controlDinersApp.dinersPot.data">Data</span></dt>
+        <dd>
+            <span>{{vm.dinersPot.data | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="controlDinersApp.dinersPot.descripcio">Descripció</span></dt>
+        <dd>
+            <span>{{vm.dinersPot.descripcio}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <!-- <button type="button" ui-sref="diners-pot-detail.edit({id:vm.dinersPot.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button> -->
+</div>

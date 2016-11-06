@@ -3,17 +3,17 @@
 
     angular
         .module('controlDinersApp')
-        .service('ExtreurePotService', ExtreurePotService);
+        .service('ExtreureDinersPotService', ExtreureDinersPotService);
 
-    ExtreurePotService.$inject = ['$uibModal'];
+    ExtreureDinersPotService.$inject = ['$uibModal'];
 
-    function ExtreurePotService ($uibModal) {
+    function ExtreureDinersPotService ($uibModal) {
 
         this.open = function () {
             return $uibModal.open({
                 animation: true,
-                templateUrl: 'app/services/pot/extreure-pot.html',
-                controller: 'ExtreurePotController',
+                templateUrl: 'app/services/pot/extreure-diners-pot.html',
+                controller: 'ExtreureDinersPotController',
                 controllerAs: 'vm',
                 backdrop: 'static',
                 size: 'sm',
@@ -24,7 +24,7 @@
                         };
                     },
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('pot');
+                        $translatePartialLoader.addPart('dinerspot');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }]

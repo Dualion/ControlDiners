@@ -4,19 +4,19 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myPotLabel" data-translate="controlDinersApp.pot.home.createOrEditLabel">Create or edit a Pot</h4>
+        <h4 class="modal-title" id="myDinersPotLabel" data-translate="controlDinersApp.dinersPot.home.createOrEditLabel">Create or edit a Diners Pot</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.pot.id">
+        <div class="form-group" ng-show="vm.dinersPot.id">
             <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.pot.id" readonly />
+                    ng-model="vm.dinersPot.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" data-translate="controlDinersApp.pot.dinersTotals" for="field_dinersTotals">Diners Totals</label>
+            <label class="control-label" data-translate="controlDinersApp.dinersPot.dinersTotals" for="field_dinersTotals">Diners Totals</label>
             <input type="number" class="form-control" name="dinersTotals" id="field_dinersTotals"
-                    ng-model="vm.pot.dinersTotals"
+                    ng-model="vm.dinersPot.dinersTotals"
                     required />
             <div ng-show="editForm.dinersTotals.$invalid">
                 <p class="help-block"
@@ -30,9 +30,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" data-translate="controlDinersApp.pot.data" for="field_data">Data</label>
+            <label class="control-label" data-translate="controlDinersApp.dinersPot.data" for="field_data">Data</label>
                 <div class="input-group">
-                    <input id="field_data" type="text" class="form-control" name="data" datetime-picker="{{dateformat}}" ng-model="vm.pot.data" is-open="vm.datePickerOpenStatus.data"
+                    <input id="field_data" type="text" class="form-control" name="data" datetime-picker="{{dateformat}}" ng-model="vm.dinersPot.data" is-open="vm.datePickerOpenStatus.data"
                     required  />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('data')"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -50,9 +50,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" data-translate="controlDinersApp.pot.descripcio" for="field_descripcio">Descripcio</label>
+            <label class="control-label" data-translate="controlDinersApp.dinersPot.descripcio" for="field_descripcio">Descripcio</label>
             <input type="text" class="form-control" name="descripcio" id="field_descripcio"
-                    ng-model="vm.pot.descripcio"
+                    ng-model="vm.dinersPot.descripcio"
                     required ng-minlength="3" ng-maxlength="100" />
             <div ng-show="editForm.descripcio.$invalid">
                 <p class="help-block"

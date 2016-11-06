@@ -7,12 +7,12 @@ import java.util.Objects;
 
 
 /**
- * A DTO for the Pot entity.
+ * A DTO for the DinersPot entity.
  */
-public class PotDTO implements Serializable {
+public class DinersPotDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
     private Long id;
 
     @NotNull
@@ -64,9 +64,9 @@ public class PotDTO implements Serializable {
             return false;
         }
 
-        PotDTO potDTO = (PotDTO) o;
+        DinersPotDTO dinersPotDTO = (DinersPotDTO) o;
 
-        if ( ! Objects.equals(id, potDTO.id)) return false;
+        if ( ! Objects.equals(id, dinersPotDTO.id)) return false;
 
         return true;
     }
@@ -78,7 +78,7 @@ public class PotDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "PotDTO{" +
+        return "DinersPotDTO{" +
             "id=" + id +
             ", dinersTotals='" + dinersTotals + "'" +
             ", data='" + data + "'" +

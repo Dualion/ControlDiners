@@ -9,16 +9,16 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('pot', {
+        .state('diners-pot', {
             parent: 'entity',
-            url: '/pot?page&sort&search',
+            url: '/diners-pot?page&sort&search',
             data: {
-                pageTitle: 'controlDinersApp.pot.home.title'
+                pageTitle: 'controlDinersApp.dinersPot.home.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/pot/pots.html',
-                    controller: 'PotController',
+                    templateUrl: 'app/entities/diners-pot/diners-pots.html',
+                    controller: 'DinersPotController',
                     controllerAs: 'vm'
                 }
             },
@@ -44,37 +44,37 @@
                     };
                 }],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('pot');
+                    $translatePartialLoader.addPart('dinersPot');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
             }
         })
-        .state('pot-detail', {
+        .state('diners-pot-detail', {
             parent: 'entity',
-            url: '/pot/{id}',
+            url: '/diners-pot/{id}',
             data: {
                 authorities: ['ROLE_USER'],
-                pageTitle: 'controlDinersApp.pot.detail.title'
+                pageTitle: 'controlDinersApp.dinersPot.detail.title'
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/entities/pot/pot-detail.html',
-                    controller: 'PotDetailController',
+                    templateUrl: 'app/entities/diners-pot/diners-pot-detail.html',
+                    controller: 'DinersPotDetailController',
                     controllerAs: 'vm'
                 }
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('pot');
+                    $translatePartialLoader.addPart('dinersPot');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Pot', function($stateParams, Pot) {
-                    return Pot.get({id : $stateParams.id}).$promise;
+                entity: ['$stateParams', 'DinersPot', function($stateParams, DinersPot) {
+                    return DinersPot.get({id : $stateParams.id}).$promise;
                 }],
                 previousState: ["$state", function ($state) {
                     var currentStateData = {
-                        name: $state.current.name || 'pot',
+                        name: $state.current.name || 'diners-pot',
                         params: $state.params,
                         url: $state.href($state.current.name, $state.params)
                     };
@@ -82,22 +82,22 @@
                 }]
             }
         })
-        .state('pot-detail.edit', {
-            parent: 'pot-detail',
+        .state('diners-pot-detail.edit', {
+            parent: 'diners-pot-detail',
             url: '/detail/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/pot/pot-dialog.html',
-                    controller: 'PotDialogController',
+                    templateUrl: 'app/entities/diners-pot/diners-pot-dialog.html',
+                    controller: 'DinersPotDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Pot', function(Pot) {
-                            return Pot.get({id : $stateParams.id}).$promise;
+                        entity: ['DinersPot', function(DinersPot) {
+                            return DinersPot.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -107,16 +107,16 @@
                 });
             }]
         })
-        .state('pot.new', {
-            parent: 'pot',
+        .state('diners-pot.new', {
+            parent: 'diners-pot',
             url: '/new',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/pot/pot-dialog.html',
-                    controller: 'PotDialogController',
+                    templateUrl: 'app/entities/diners-pot/diners-pot-dialog.html',
+                    controller: 'DinersPotDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
@@ -131,56 +131,32 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('pot', null, { reload: 'pot' });
+                    $state.go('diners-pot', null, { reload: 'diners-pot' });
                 }, function() {
-                    $state.go('pot');
+                    $state.go('diners-pot');
                 });
             }]
         })
-        .state('pot.edit', {
-            parent: 'pot',
+        .state('diners-pot.edit', {
+            parent: 'diners-pot',
             url: '/{id}/edit',
             data: {
                 authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/pot/pot-dialog.html',
-                    controller: 'PotDialogController',
+                    templateUrl: 'app/entities/diners-pot/diners-pot-dialog.html',
+                    controller: 'DinersPotDialogController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: ['Pot', function(Pot) {
-                            return Pot.get({id : $stateParams.id}).$promise;
+                        entity: ['DinersPot', function(DinersPot) {
+                            return DinersPot.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('pot', null, { reload: 'pot' });
-                }, function() {
-                    $state.go('^');
-                });
-            }]
-        })
-        .state('pot.delete', {
-            parent: 'pot',
-            url: '/{id}/delete',
-            data: {
-                authorities: ['ROLE_USER']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/pot/pot-delete-dialog.html',
-                    controller: 'PotDeleteController',
-                    controllerAs: 'vm',
-                    size: 'md',
-                    resolve: {
-                        entity: ['Pot', function(Pot) {
-                            return Pot.get({id : $stateParams.id}).$promise;
-                        }]
-                    }
-                }).result.then(function() {
-                    $state.go('pot', null, { reload: 'pot' });
+                    $state.go('diners-pot', null, { reload: 'diners-pot' });
                 }, function() {
                     $state.go('^');
                 });

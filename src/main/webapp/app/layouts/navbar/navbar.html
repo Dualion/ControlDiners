@@ -35,7 +35,7 @@
                         <li ui-sref-active="active">
                             <a ui-sref="proces" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span data-translate="global.menu.entities.proces">Proces</span>
+                                <span data-translate="global.menu.entities.proces">Procés</span>
                             </a>
                         </li>
                         <li ui-sref-active="active">
@@ -59,12 +59,12 @@
                         <span class="hidden-sm" data-translate="global.menu.entities.usuaris">Usuaris</span>
                     </a>
                 </li>
-                <li ui-sref-active="active" >
-                    <a ui-sref="pot" ng-click="vm.collapseNavbar()">
-                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;
-                        <span class="hidden-sm" data-translate="global.menu.entities.pot">Pot</span>
-                    </a>
-                </li>
+				<li ui-sref-active="active">
+				    <a ui-sref="diners-pot" ng-click="vm.collapseNavbar()">
+				        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;
+				        <span data-translate="global.menu.entities.dinersPot">Diners del Pot</span>
+				    </a>
+				</li>
                 <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>

@@ -31,6 +31,6 @@
     "changelogDate": "20161028234035",
     "dto": "mapstruct",
     "service": "serviceImpl",
-    "entityTableName": "pot",
+    "entityTableName": "diners_pot",
     "pagination": "pager"
 }

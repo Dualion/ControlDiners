@@ -3,11 +3,11 @@
 
     angular
         .module('controlDinersApp')
-        .controller('PotController', PotController);
+        .controller('DinersPotController', DinersPotController);
 
-    PotController.$inject = ['$scope', '$state', '$filter', 'Pot', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    DinersPotController.$inject = ['$scope', '$state', '$filter','DinersPot', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function PotController ($scope, $state, $filter, Pot, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function DinersPotController ($scope, $state, $filter, DinersPot, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
         
         vm.loadPage = loadPage;
@@ -20,7 +20,7 @@
         loadAll();
 
         function loadAll () {
-            Pot.query({
+            DinersPot.query({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
                 sort: sort()
@@ -38,15 +38,13 @@
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
-                vm.pots = data;
+                vm.dinersPots = data;
                 vm.page = pagingParams.page;
-                
                 for (var i=data.length-1; i>=0; i--) {
                 	vm.values[0].push(data[i].dinersTotals);
                 	var dataFormatada = $filter('date')(data[i].data, 'short');
                 	vm.labels.push(dataFormatada);
             	}
-               
             }
             function onError(error) {
                 AlertService.error(error.data.message);

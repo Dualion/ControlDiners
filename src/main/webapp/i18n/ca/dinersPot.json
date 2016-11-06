@@ -1,0 +1,26 @@
+{
+    "controlDinersApp": {
+        "dinersPot" : {
+            "home": {
+                "title": "Diners Pots",
+                "createLabel": "Afegir diners al Pot",
+                "createOrEditLabel": "Editar diners del Pot",
+                "search": "Search for Diners Pot",
+            	"dinersExtreurePot": "Diners a extreure del pot"
+            },
+            "created": "A new Diners Pot is created with identifier {{ param }}",
+            "updated": "A Diners Pot is updated with identifier {{ param }}",
+            "deleted": "A Diners Pot is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Diners Pot {{ id }}?"
+            },
+            "detail": {
+                "title": "Diners del Pot"
+            },
+            "dinersTotals": "Diners Totals",
+            "data": "Data",
+            "descripcio": "Descripció",
+            "diners": "Diners"
+        }
+    }
+}

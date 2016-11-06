@@ -3,11 +3,11 @@
 
     angular
         .module('controlDinersApp')
-        .controller('ExtreurePotController', ExtreurePotController);
+        .controller('ExtreureDinersPotController', ExtreureDinersPotController);
 
-    ExtreurePotController.$inject = ['$timeout', '$uibModalInstance', 'entity', 'Pot'];
+    ExtreureDinersPotController.$inject = ['$timeout', '$uibModalInstance', 'entity', 'DinersPot'];
 
-    function ExtreurePotController ($timeout, $uibModalInstance, entity, Pot) {
+    function ExtreureDinersPotController ($timeout, $uibModalInstance, entity, DinersPot) {
         var vm = this;
 
         vm.quantitat = entity;
@@ -24,7 +24,7 @@
 
         function save () {
             vm.isSaving = true;
-            Pot.extreure(vm.pot, onSaveSuccess, onSaveError);
+            DinersPot.extreure(vm.dinersPot, onSaveSuccess, onSaveError);
         }
 
         function onSaveSuccess (result) {

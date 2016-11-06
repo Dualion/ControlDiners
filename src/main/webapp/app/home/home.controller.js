@@ -5,9 +5,9 @@
         .module('controlDinersApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'Pot', 'Proces', 'Quantitat', 'UsuarisProces', 'QuantitatService', 'ExtreurePotService'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'DinersPot', 'Proces', 'Quantitat', 'UsuarisProces', 'QuantitatService', 'ExtreureDinersPotService'];
 
-    function HomeController ($scope, Principal, LoginService, $state, Pot, Proces, Quantitat, UsuarisProces, QuantitatService, ExtreurePotService) {
+    function HomeController ($scope, Principal, LoginService, $state, DinersPot, Proces, Quantitat, UsuarisProces, QuantitatService, ExtreureDinersPotService) {
         var vm = this;
 
         vm.lastPot = null;
@@ -36,7 +36,7 @@
         getUsuarisProces();
         
         function extreurePot() {
-        	ExtreurePotService.open().then(function (data) {
+        	ExtreureDinersPotService.open().then(function (data) {
                 vm.lastPot = data.dinersTotals;
             });
         }
@@ -48,7 +48,7 @@
         }
 
         function pagar(userId) {
-        	Pot.pagament({
+        	DinersPot.pagament({
         		  'userId': userId
         	}).$promise.then(function(data) {
         		getUsuarisProces();
@@ -57,7 +57,7 @@
         }
         
         function cancelarPagament(userId) {
-        	Pot.cancelarPagament({
+        	DinersPot.cancelarPagament({
 	      		  'userId': userId
 	      	}).$promise.then(function(data) {
 	      		getUsuarisProces();
@@ -109,7 +109,7 @@
         }
 
         function getLast() {
-        	Pot.getLast().$promise.then(function(data) {
+        	DinersPot.getLast().$promise.then(function(data) {
         		vm.lastPot = data.dinersTotals;
         	}, function(error) {
         		vm.lastPot = 0;

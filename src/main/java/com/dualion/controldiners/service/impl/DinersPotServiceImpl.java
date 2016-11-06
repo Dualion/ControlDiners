@@ -1,20 +1,20 @@
 package com.dualion.controldiners.service.impl;
 
-import com.dualion.controldiners.service.PotService;
+import com.dualion.controldiners.service.DinersPotService;
 import com.dualion.controldiners.service.ProcesService;
 import com.dualion.controldiners.service.QuantitatService;
 import com.dualion.controldiners.service.UsuarisProcesService;
-import com.dualion.controldiners.domain.Pot;
-import com.dualion.controldiners.repository.PotRepository;
-import com.dualion.controldiners.service.dto.PotDTO;
+import com.dualion.controldiners.domain.DinersPot;
+import com.dualion.controldiners.repository.DinersPotRepository;
+import com.dualion.controldiners.service.dto.DinersPotDTO;
 import com.dualion.controldiners.service.dto.ProcesDTO;
 import com.dualion.controldiners.service.dto.QuantitatDTO;
 import com.dualion.controldiners.service.dto.UsuarisProcesDTO;
-import com.dualion.controldiners.service.exception.PotException;
+import com.dualion.controldiners.service.exception.DinersPotException;
 import com.dualion.controldiners.service.exception.ProcesException;
 import com.dualion.controldiners.service.exception.QuantitatException;
 import com.dualion.controldiners.service.exception.UsuarisProcesException;
-import com.dualion.controldiners.service.mapper.PotMapper;
+import com.dualion.controldiners.service.mapper.DinersPotMapper;
 import com.dualion.controldiners.web.rest.vm.ExtreureVM;
 import com.dualion.controldiners.web.rest.vm.PagamentVM;
 
@@ -32,19 +32,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Service Implementation for managing Pot.
+ * Service Implementation for managing DinersPot.
  */
 @Service
 @Transactional
-public class PotServiceImpl implements PotService{
+public class DinersPotServiceImpl implements DinersPotService{
 
-private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(DinersPotServiceImpl.class);
     
     @Inject
-    private PotRepository potRepository;
+    private DinersPotRepository dinersPotRepository;
 
     @Inject
-    private PotMapper potMapper;
+    private DinersPotMapper dinersPotMapper;
 
     @Inject
     private UsuarisProcesService usuarisProcesService;
@@ -56,7 +56,7 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
     private QuantitatService quantitatService;
 
     /**
-     * Save pagament.
+     * Save pagament al pot.
      *
      * @param usuariId
      * @return the persisted entity
@@ -64,16 +64,16 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
      * @throws ProcesException  
      * @throws UsuarisProcesException 
      */
-    public PotDTO savePagament(PagamentVM pagamentVM) throws QuantitatException, ProcesException, UsuarisProcesException {
-        log.debug("Request to save Pagament : {}", pagamentVM);
+    public DinersPotDTO savePagament(PagamentVM pagamentVM) throws QuantitatException, ProcesException, UsuarisProcesException {
+        log.debug("Request to afegir Pagament al pot: {}", pagamentVM);
         ProcesDTO procesDTO = procesService.findActiva();
-        PotDTO result = null;
+        DinersPotDTO result = null;
         if (procesDTO != null) {
         	UsuarisProcesDTO usuarisProcesDTO = usuarisProcesService.findOneByUserIdAndProcesId(pagamentVM.getUserId(), procesDTO.getId());
         	QuantitatDTO pagament = quantitatService.findActiva();
         	if (usuarisProcesDTO != null) {
         		if (usuarisProcesDTO.getDiners() > 0) {
-        			//Usuari ja ha pagat
+        			//Usuari ja ha pagat en aquest procés
         			throw new UsuarisProcesException("L'usuari ja ha pagat!");
         		}
         		
@@ -84,12 +84,12 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
         		
         		//Afegim el pagament al total del pot.
         		diners = 0.0F;
-        		Optional<Pot> lastPot = potRepository.findFirstByOrderByDataDesc();
-        		if (lastPot.isPresent()) {
-        			diners = lastPot.get().getDinersTotals();
+        		Optional<DinersPot> lastDinersPot = dinersPotRepository.findFirstByOrderByDataDesc();
+        		if (lastDinersPot.isPresent()) {
+        			diners = lastDinersPot.get().getDinersTotals();
         		} 
         		diners = diners + pagament.getDiners(); 
-        		Pot newPot = new Pot();
+        		DinersPot newPot = new DinersPot();
     			newPot.dinersTotals(diners)
     				.setDescripcio(new StringBuilder("Pagament ")
     						.append(pagament.getDiners())
@@ -97,8 +97,8 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
     						.append(diners.toString())
     						.append(" -> ").append(usuarisProcesDTO.getUsuarisNom())
     						.toString());
-				newPot = potRepository.save(newPot);
-    			result = potMapper.potToPotDTO(newPot);
+				newPot = dinersPotRepository.save(newPot);
+    			result = dinersPotMapper.dinersPotToDinersPotDTO(newPot);
         	} else {
         		throw new UsuarisProcesException("No existeix aquest usuari en el procés actiu");
         	}
@@ -109,41 +109,41 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
     }
     
     /**
-     * Cancelar pagament.
+     * Cancelar pagament del pot.
      *
      * @param usuariId
      * @return the persisted entity
      * @throws ProcesException 
-     * @throws PotException, UsuarisProcesException 
+     * @throws DinersPotException, UsuarisProcesException 
      */
-    public PotDTO cancelarPagament(PagamentVM pagamentVM) throws ProcesException, PotException, UsuarisProcesException {
+    public DinersPotDTO cancelarPagament(PagamentVM pagamentVM) throws ProcesException, DinersPotException, UsuarisProcesException {
     	
-    	log.debug("Request to save Pagament : {}", pagamentVM);
+    	log.debug("Request to Cancel·lar pagament : {}", pagamentVM);
         ProcesDTO procesDTO = procesService.findActiva();
-        PotDTO result = null;
+        DinersPotDTO result = null;
         if (procesDTO != null) {
         	UsuarisProcesDTO usuarisProcesDTO = usuarisProcesService.findOneByUserIdAndProcesId(pagamentVM.getUserId(), procesDTO.getId());
         	if (usuarisProcesDTO != null && usuarisProcesDTO.getDiners() > 0.0) {
         		Float dinersATreure = usuarisProcesDTO.getDiners();
-        		Optional<Pot> lastPot = potRepository.findFirstByOrderByDataDesc();
+        		Optional<DinersPot> lastPot = dinersPotRepository.findFirstByOrderByDataDesc();
         		
         		//Afegim el pagament al total del pot si tenim suficients diners al pot.
         		if (lastPot.isPresent() && (lastPot.get().getDinersTotals() - dinersATreure) >= 0 ) {
         			usuarisProcesDTO.setDiners(0.0F);
             		usuarisProcesService.save(usuarisProcesDTO);
         			
-            		Pot newPot = new Pot();
-        			newPot.dinersTotals(lastPot.get().getDinersTotals() - dinersATreure)
+            		DinersPot newDinersPot = new DinersPot();
+        			newDinersPot.dinersTotals(lastPot.get().getDinersTotals() - dinersATreure)
         				.setDescripcio(new StringBuilder("Cancel·lar pagament ")
         						.append(dinersATreure.toString())
         						.append("/")
         						.append(lastPot.get().getDinersTotals() - dinersATreure)
         						.append(" -> ").append(usuarisProcesDTO.getUsuarisNom())
         						.toString());
-    				newPot = potRepository.save(newPot);
-        			result = potMapper.potToPotDTO(newPot);
+    				newDinersPot = dinersPotRepository.save(newDinersPot);
+        			result = dinersPotMapper.dinersPotToDinersPotDTO(newDinersPot);
         		} else {
-        			throw new PotException("No es pot extreure més diners dels que hi han al pot");
+        			throw new DinersPotException("No es pot extreure més diners dels que hi han al pot");
         		}
         	} else {
         		throw new UsuarisProcesException("No existeix aquest usuari en el procés actiu");
@@ -155,32 +155,32 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
     }
     
     /**
-     * Save extreure diners.
+     * Save extreure diners del pot.
      *
      * @param diners
      * @return the persisted entity 
-     * @throws PotException 
+     * @throws DinersPotException 
      */
-	public PotDTO saveExtreure(ExtreureVM extreureVM) throws PotException {
-		log.debug("Request to save Extreure : {}", extreureVM);
+	public DinersPotDTO saveExtreure(ExtreureVM extreureVM) throws DinersPotException {
+		log.debug("Request to Extreure diners del pot: {}", extreureVM);
 		Float diners = 0.0F;
-		Optional<Pot> lastPot = potRepository.findFirstByOrderByDataDesc();
-		if (lastPot.isPresent()) {
-			diners = lastPot.get().getDinersTotals();
+		Optional<DinersPot> lastDinersPot = dinersPotRepository.findFirstByOrderByDataDesc();
+		if (lastDinersPot.isPresent()) {
+			diners = lastDinersPot.get().getDinersTotals();
 		} 
 		diners = diners - extreureVM.getDiners();
 		if (diners < 0.0) {
-			throw new PotException("No es pot extreure més diners dels que hi han al pot");
+			throw new DinersPotException("No es pot extreure més diners dels que hi han al pot");
 		}
-		Pot newPot = new Pot();
+		DinersPot newPot = new DinersPot();
 		newPot.dinersTotals(diners)
 			.setDescripcio(new StringBuilder("Extreure ")
 					.append(extreureVM.getDiners())
 					.append("/")
 					.append(diners.toString())
 					.toString());
-		newPot = potRepository.save(newPot);
-		return potMapper.potToPotDTO(newPot);
+		newPot = dinersPotRepository.save(newPot);
+		return dinersPotMapper.dinersPotToDinersPotDTO(newPot);
 	}
     
     /**
@@ -190,10 +190,10 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
      *  @return the list of entities
      */
     @Transactional(readOnly = true) 
-    public Page<PotDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Pots");
-        Page<Pot> result = potRepository.findAll(pageable);
-        return result.map(pot -> potMapper.potToPotDTO(pot));
+    public Page<DinersPotDTO> findAll(Pageable pageable) {
+        log.debug("Request to get all DinersPot");
+        Page<DinersPot> result = dinersPotRepository.findAll(pageable);
+        return result.map(dinersPot -> dinersPotMapper.dinersPotToDinersPotDTO(dinersPot));
     }
 
     /**
@@ -203,11 +203,11 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
      *  @return the entity
      */
     @Transactional(readOnly = true) 
-    public PotDTO findOne(Long id) {
-        log.debug("Request to get Pot : {}", id);
-        Pot pot = potRepository.findOne(id);
-        PotDTO potDTO = potMapper.potToPotDTO(pot);
-        return potDTO;
+    public DinersPotDTO findOne(Long id) {
+        log.debug("Request to get DinersPot : {}", id);
+        DinersPot pot = dinersPotRepository.findOne(id);
+        DinersPotDTO dinersPotDTO = dinersPotMapper.dinersPotToDinersPotDTO(pot);
+        return dinersPotDTO;
     }
 
     /**
@@ -216,13 +216,13 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
      *  @return the entity
      */
     @Transactional(readOnly = true) 
-    public PotDTO findLast() {
-        log.debug("Request to get last Pot ");
-        Optional<Pot> oPot = potRepository.findFirstByOrderByDataDesc();
-        PotDTO potDTO = null;
+    public DinersPotDTO findLast() {
+        log.debug("Request to get last diners Pot");
+        Optional<DinersPot> oPot = dinersPotRepository.findFirstByOrderByDataDesc();
+        DinersPotDTO dinersPotDTO = null;
         if (oPot.isPresent()) {
-        	potDTO = potMapper.potToPotDTO(oPot.get());
+        	dinersPotDTO = dinersPotMapper.dinersPotToDinersPotDTO(oPot.get());
         }
-        return potDTO;
+        return dinersPotDTO;
     }
 }

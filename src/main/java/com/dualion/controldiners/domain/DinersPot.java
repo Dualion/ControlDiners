@@ -11,11 +11,11 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
- * A Pot.
+ * A DinersPot.
  */
 @Entity
-@Table(name = "pot")
-public class Pot implements Serializable {
+@Table(name = "diners_pot")
+public class DinersPot implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public class Pot implements Serializable {
         return dinersTotals;
     }
 
-    public Pot dinersTotals(Float dinersTotals) {
+    public DinersPot dinersTotals(Float dinersTotals) {
         this.dinersTotals = dinersTotals;
         return this;
     }
@@ -62,7 +62,7 @@ public class Pot implements Serializable {
         return data;
     }
 
-    public Pot data(ZonedDateTime data) {
+    public DinersPot data(ZonedDateTime data) {
         this.data = data;
         return this;
     }
@@ -75,7 +75,7 @@ public class Pot implements Serializable {
         return descripcio;
     }
 
-    public Pot descripcio(String descripcio) {
+    public DinersPot descripcio(String descripcio) {
         this.descripcio = descripcio;
         return this;
     }
@@ -92,11 +92,11 @@ public class Pot implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Pot pot = (Pot) o;
-        if(pot.id == null || id == null) {
+        DinersPot dinersPot = (DinersPot) o;
+        if(dinersPot.id == null || id == null) {
             return false;
         }
-        return Objects.equals(id, pot.id);
+        return Objects.equals(id, dinersPot.id);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class Pot implements Serializable {
 
     @Override
     public String toString() {
-        return "Pot{" +
+        return "DinersPot{" +
             "id=" + id +
             ", dinersTotals='" + dinersTotals + "'" +
             ", data='" + data + "'" +
