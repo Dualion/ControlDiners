@@ -5,7 +5,8 @@
                 "title": "Pot",
                 "createLabel": "Crear un nou registre al Pot",
                 "createOrEditLabel": "Crear o editar el Pot",
-                "search": "Search for Pot"
+                "search": "Search for Pot",
+            	"dinersExtreurePot": "Diners a extreure del pot"
             },
             "created": "A new Pot is created with identifier {{ param }}",
             "updated": "A Pot is updated with identifier {{ param }}",
@@ -18,7 +19,8 @@
             },
             "dinersTotals": "Diners Totals",
             "data": "Data",
-            "descripcio": "Descripció"
+            "descripcio": "DescripciÃ³",
+            "diners": "Diners"
         }
     }
 }

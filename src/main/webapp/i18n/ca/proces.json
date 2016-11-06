@@ -2,9 +2,9 @@
     "controlDinersApp": {
         "proces" : {
             "home": {
-                "title": "Proces",
-                "createLabel": "Crear un nou Proces",
-                "createOrEditLabel": "Crear o editar un Proces",
+                "title": "Procés",
+                "createLabel": "Crear un nou Procés",
+                "createOrEditLabel": "Crear o editar un Procés",
                 "search": "Search for Proces"
             },
             "created": "A new Proces is created with identifier {{ param }}",
@@ -14,7 +14,7 @@
                 "question": "Are you sure you want to delete Proces {{ id }}?"
             },
             "detail": {
-                "title": "Proces"
+                "title": "Procés"
             },
             "dataInici": "Data Inici",
             "estat": "Estat"

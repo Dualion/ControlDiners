@@ -134,7 +134,7 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
         			
             		Pot newPot = new Pot();
         			newPot.dinersTotals(lastPot.get().getDinersTotals() - dinersATreure)
-        				.setDescripcio(new StringBuilder("Pagament ")
+        				.setDescripcio(new StringBuilder("Cancel·lar pagament ")
         						.append(dinersATreure.toString())
         						.append("/")
         						.append(lastPot.get().getDinersTotals() - dinersATreure)

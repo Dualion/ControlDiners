@@ -5,7 +5,8 @@
                 "title": "Quantitats",
                 "createLabel": "Crear una nova Quantitat",
                 "createOrEditLabel": "Crear o editar una Quantitat",
-                "search": "Search for Quantitat"
+                "search": "Search for Quantitat",
+                "quantitatAPagar": "Quantitat a pagar"
             },
             "created": "A new Quantitat is created with identifier {{ param }}",
             "updated": "A Quantitat is updated with identifier {{ param }}",
