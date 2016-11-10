@@ -37,17 +37,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="usuarisProces in vm.usuarisProces track by usuarisProces.id" ng-switch="vm.isAuthenticated()">
+                <tr ng-repeat="usuarisProces in vm.usuarisProces | orderBy:['diners','usuarisNom']" ng-switch="vm.isAuthenticated()">
                     <td>{{usuarisProces.usuarisNom}}</td>
                     <td>{{usuarisProces.diners | currency }}</td>
 
                     <td class="text-right" ng-switch-when="true">
                         <div class="btn-group flex-btn-group-container" >
-                            <button type="submit" class="btn btn-info btn-sm" ng-click="vm.pagar(usuarisProces.usuarisId)">
+                            <button type="submit" class="btn btn-info btn-sm" ng-click="vm.pagar(usuarisProces.usuarisId)" ng-disabled="usuarisProces.diners > 0">
                             	<span class="glyphicon glyphicon-euro"></span>
                                 <span class="hidden-xs hidden-sm">Pagar</span>
                             </button>
-                            <button type="submit" class="btn btn-danger btn-sm" ng-click="vm.cancelarPagament(usuarisProces.usuarisId)">
+                            <button type="submit" class="btn btn-danger btn-sm" ng-click="vm.cancelarPagament(usuarisProces.usuarisId)" ng-disabled="usuarisProces.diners == 0">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm">Cancel·lar</span>
                             </button>
