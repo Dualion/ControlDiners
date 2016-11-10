@@ -3,6 +3,8 @@ package com.dualion.controldiners.service.dto;
 import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 
@@ -16,7 +18,7 @@ public class PotDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Float dinersTotals;
+    private BigDecimal dinersTotals;
 
     @NotNull
     private ZonedDateTime data;
@@ -33,12 +35,12 @@ public class PotDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Float getDinersTotals() {
+    public BigDecimal getDinersTotals() {
         return dinersTotals;
     }
 
-    public void setDinersTotals(Float dinersTotals) {
-        this.dinersTotals = dinersTotals;
+    public void setDinersTotals(BigDecimal dinersTotals) {
+        this.dinersTotals = dinersTotals.setScale(2, RoundingMode.CEILING);
     }
     public ZonedDateTime getData() {
         return data;

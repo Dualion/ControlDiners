@@ -1,9 +1,13 @@
 package com.dualion.controldiners.domain;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import com.dualion.controldiners.domain.util.BigDecimalConverter;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
@@ -20,8 +24,9 @@ public class Quantitat implements Serializable {
     private Long id;
 
     @NotNull
+    @Convert(converter=BigDecimalConverter.class)
     @Column(name = "diners", nullable = false)
-    private Float diners;
+    private BigDecimal diners;
 
     @Column(name = "actiu", nullable = false)
     private Boolean actiu;
@@ -34,17 +39,17 @@ public class Quantitat implements Serializable {
         this.id = id;
     }
 
-    public Float getDiners() {
+    public BigDecimal getDiners() {
         return diners;
     }
 
-    public Quantitat diners(Float diners) {
-        this.diners = diners;
+    public Quantitat diners(BigDecimal diners) {
+        this.diners = diners.setScale(2, RoundingMode.CEILING);
         return this;
     }
 
-    public void setDiners(Float diners) {
-        this.diners = diners;
+    public void setDiners(BigDecimal diners) {
+        this.diners = diners.setScale(2, RoundingMode.CEILING);
     }
 
     public Boolean isActiu() {

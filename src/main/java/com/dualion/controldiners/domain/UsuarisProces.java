@@ -1,9 +1,13 @@
 package com.dualion.controldiners.domain;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import com.dualion.controldiners.domain.util.BigDecimalConverter;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
@@ -20,8 +24,9 @@ public class UsuarisProces implements Serializable {
     private Long id;
 
     @NotNull
+    @Convert(converter=BigDecimalConverter.class)
     @Column(name = "diners", nullable = false)
-    private Float diners;
+    private BigDecimal diners;
 
     @ManyToOne
     private Proces proces;
@@ -37,17 +42,17 @@ public class UsuarisProces implements Serializable {
         this.id = id;
     }
 
-    public Float getDiners() {
+    public BigDecimal getDiners() {
         return diners;
     }
 
-    public UsuarisProces diners(Float diners) {
-        this.diners = diners;
+    public UsuarisProces diners(BigDecimal diners) {
+        this.diners = diners.setScale(2, RoundingMode.CEILING);
         return this;
     }
 
-    public void setDiners(Float diners) {
-        this.diners = diners;
+    public void setDiners(BigDecimal diners) {
+        this.diners = diners.setScale(2, RoundingMode.CEILING);
     }
 
     public Proces getProces() {

@@ -2,6 +2,8 @@ package com.dualion.controldiners.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 
@@ -15,7 +17,7 @@ public class QuantitatDTO implements Serializable {
 	private Long id;
 
     @NotNull
-    private Float diners;
+    private BigDecimal diners;
 
     private Boolean actiu;
 
@@ -27,12 +29,12 @@ public class QuantitatDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Float getDiners() {
+    public BigDecimal getDiners() {
         return diners;
     }
 
-    public void setDiners(Float diners) {
-        this.diners = diners;
+    public void setDiners(BigDecimal diners) {
+        this.diners = diners.setScale(2, RoundingMode.CEILING);
     }
     public Boolean getActiu() {
         return actiu;

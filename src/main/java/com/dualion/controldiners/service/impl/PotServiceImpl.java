@@ -26,6 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +43,7 @@ import java.util.stream.Collectors;
 public class PotServiceImpl implements PotService{
 
 private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
-    
+
     @Inject
     private PotRepository potRepository;
 
@@ -72,29 +76,28 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
         	UsuarisProcesDTO usuarisProcesDTO = usuarisProcesService.findOneByUserIdAndProcesId(pagamentVM.getUserId(), procesDTO.getId());
         	QuantitatDTO pagament = quantitatService.findActiva();
         	if (usuarisProcesDTO != null) {
-        		if (usuarisProcesDTO.getDiners() > 0) {
+        		if (usuarisProcesDTO.getDiners().compareTo(BigDecimal.ZERO) > 0) {
         			//Usuari ja ha pagat
         			throw new UsuarisProcesException("L'usuari ja ha pagat!");
         		}
         		
         		// Afegeix el pagament al total del usuari
-        		Float diners = usuarisProcesDTO.getDiners() + pagament.getDiners();
-        		usuarisProcesDTO.setDiners(diners);
+        		usuarisProcesDTO.setDiners(usuarisProcesDTO.getDiners().add(pagament.getDiners()));
         		usuarisProcesService.save(usuarisProcesDTO);
         		
         		//Afegim el pagament al total del pot.
-        		diners = 0.0F;
-        		Optional<Pot> lastPot = potRepository.findFirstByOrderByDataDesc();
+        		BigDecimal diners = BigDecimal.ZERO;
+        		Optional<Pot> lastPot = potRepository.findFirstByOrderByIdDesc();
         		if (lastPot.isPresent()) {
         			diners = lastPot.get().getDinersTotals();
         		} 
-        		diners = diners + pagament.getDiners(); 
+        		diners = diners.add(pagament.getDiners()); 
         		Pot newPot = new Pot();
-    			newPot.dinersTotals(diners)
+    			newPot.dinersTotals(diners.setScale(2, RoundingMode.CEILING))
     				.setDescripcio(new StringBuilder("Pagament ")
     						.append(pagament.getDiners())
     						.append("/")
-    						.append(diners.toString())
+    						.append(diners.setScale(2, RoundingMode.CEILING))
     						.append(" -> ").append(usuarisProcesDTO.getUsuarisNom())
     						.toString());
 				newPot = potRepository.save(newPot);
@@ -123,25 +126,28 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
         PotDTO result = null;
         if (procesDTO != null) {
         	UsuarisProcesDTO usuarisProcesDTO = usuarisProcesService.findOneByUserIdAndProcesId(pagamentVM.getUserId(), procesDTO.getId());
-        	if (usuarisProcesDTO != null && usuarisProcesDTO.getDiners() > 0.0) {
-        		Float dinersATreure = usuarisProcesDTO.getDiners();
-        		Optional<Pot> lastPot = potRepository.findFirstByOrderByDataDesc();
+        	if (usuarisProcesDTO != null && usuarisProcesDTO.getDiners().compareTo(BigDecimal.ZERO) > 0) {
+        		BigDecimal dinersATreure = usuarisProcesDTO.getDiners();
+        		Optional<Pot> lastPot = potRepository.findFirstByOrderByIdDesc();
         		
         		//Afegim el pagament al total del pot si tenim suficients diners al pot.
-        		if (lastPot.isPresent() && (lastPot.get().getDinersTotals() - dinersATreure) >= 0 ) {
-        			usuarisProcesDTO.setDiners(0.0F);
-            		usuarisProcesService.save(usuarisProcesDTO);
-        			
-            		Pot newPot = new Pot();
-        			newPot.dinersTotals(lastPot.get().getDinersTotals() - dinersATreure)
-        				.setDescripcio(new StringBuilder("Cancel·lar pagament ")
-        						.append(dinersATreure.toString())
-        						.append("/")
-        						.append(lastPot.get().getDinersTotals() - dinersATreure)
-        						.append(" -> ").append(usuarisProcesDTO.getUsuarisNom())
-        						.toString());
-    				newPot = potRepository.save(newPot);
-        			result = potMapper.potToPotDTO(newPot);
+        		if (lastPot.isPresent()) {
+        			BigDecimal dinersPot = lastPot.get().getDinersTotals().setScale(2, RoundingMode.CEILING);
+        			if (dinersPot.subtract(dinersATreure).compareTo(BigDecimal.ZERO) > 0 ) {
+	        			usuarisProcesDTO.setDiners(BigDecimal.ZERO);
+	            		usuarisProcesService.save(usuarisProcesDTO);
+	        			
+	            		Pot newPot = new Pot();
+	        			newPot.dinersTotals(dinersPot.subtract(dinersATreure).setScale(2, RoundingMode.CEILING))
+	        				.setDescripcio(new StringBuilder("Cancel·lar pagament ")
+	        						.append(dinersATreure.setScale(2, RoundingMode.CEILING))
+	        						.append("/")
+	        						.append(dinersPot.subtract(dinersATreure).setScale(2, RoundingMode.CEILING))
+	        						.append(" -> ").append(usuarisProcesDTO.getUsuarisNom())
+	        						.toString());
+	    				newPot = potRepository.save(newPot);
+	        			result = potMapper.potToPotDTO(newPot);
+        			}
         		} else {
         			throw new PotException("No es pot extreure més diners dels que hi han al pot");
         		}
@@ -163,21 +169,21 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
      */
 	public PotDTO saveExtreure(ExtreureVM extreureVM) throws PotException {
 		log.debug("Request to save Extreure : {}", extreureVM);
-		Float diners = 0.0F;
-		Optional<Pot> lastPot = potRepository.findFirstByOrderByDataDesc();
+		BigDecimal diners = BigDecimal.ZERO;
+		Optional<Pot> lastPot = potRepository.findFirstByOrderByIdDesc();
 		if (lastPot.isPresent()) {
 			diners = lastPot.get().getDinersTotals();
 		} 
-		diners = diners - extreureVM.getDiners();
-		if (diners < 0.0) {
+		diners = diners.subtract(extreureVM.getDiners());
+		if (diners.compareTo(BigDecimal.ZERO) < 0) {
 			throw new PotException("No es pot extreure més diners dels que hi han al pot");
 		}
 		Pot newPot = new Pot();
-		newPot.dinersTotals(diners)
+		newPot.dinersTotals(diners.setScale(2, RoundingMode.CEILING))
 			.setDescripcio(new StringBuilder("Extreure ")
 					.append(extreureVM.getDiners())
 					.append("/")
-					.append(diners.toString())
+					.append(diners.setScale(2, RoundingMode.CEILING))
 					.toString());
 		newPot = potRepository.save(newPot);
 		return potMapper.potToPotDTO(newPot);
@@ -218,7 +224,7 @@ private final Logger log = LoggerFactory.getLogger(PotServiceImpl.class);
     @Transactional(readOnly = true) 
     public PotDTO findLast() {
         log.debug("Request to get last Pot ");
-        Optional<Pot> oPot = potRepository.findFirstByOrderByDataDesc();
+        Optional<Pot> oPot = potRepository.findFirstByOrderByIdDesc();
         PotDTO potDTO = null;
         if (oPot.isPresent()) {
         	potDTO = potMapper.potToPotDTO(oPot.get());

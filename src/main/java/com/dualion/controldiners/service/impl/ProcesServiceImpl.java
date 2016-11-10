@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -76,7 +77,7 @@ private final Logger log = LoggerFactory.getLogger(ProcesServiceImpl.class);
         final Proces proces = procesRepository.save(procesBS);
         log.debug("Procés {} iniciat amb la quantitat: {}", proces.getId(), quantitatDTO.getDiners());
         if (proces != null){
-        	final Float diners = 0.0F;
+        	final BigDecimal diners = BigDecimal.ZERO;
         	usuarisService.findAllActiveUser().stream().forEach(usuari -> {
         		UsuarisProcesDTO usuarisProcesDTO = new UsuarisProcesDTO();
         		usuarisProcesDTO.setUsuarisId(usuari.getId());
@@ -100,7 +101,7 @@ private final Logger log = LoggerFactory.getLogger(ProcesServiceImpl.class);
     	if (optionalProces.isPresent()) {
     		Proces proces = optionalProces.get();
     		List<UsuarisProcesDTO> usuarisProcesDTOs = usuarisProcesService.findAllProcesId(proces.getId());
-    		Long noPagatPot = usuarisProcesDTOs.stream().filter(usuarisProces -> usuarisProces.getDiners() == 0).count();
+    		Long noPagatPot = usuarisProcesDTOs.stream().filter(usuarisProces -> usuarisProces.getDiners().compareTo(BigDecimal.ZERO) == 0).count();
     		if (noPagatPot > 0) {
     			throw new UsuarisProcesException("Hi ha usuaris que encara no han pagat");
     		}

@@ -1,12 +1,15 @@
 package com.dualion.controldiners.domain;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.dualion.controldiners.domain.util.BigDecimalConverter;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -24,9 +27,10 @@ public class Pot implements Serializable {
     private Long id;
 
     @NotNull
+    @Convert(converter=BigDecimalConverter.class)
     @Column(name = "diners_totals", nullable = false)
-    private Float dinersTotals;
-
+    private BigDecimal dinersTotals;
+    
     @NotNull
     @CreatedDate
     @Column(name = "data", nullable = false)
@@ -45,17 +49,17 @@ public class Pot implements Serializable {
         this.id = id;
     }
 
-    public Float getDinersTotals() {
+    public BigDecimal getDinersTotals() {
         return dinersTotals;
     }
 
-    public Pot dinersTotals(Float dinersTotals) {
-        this.dinersTotals = dinersTotals;
+    public Pot dinersTotals(BigDecimal dinersTotals) {
+        this.dinersTotals = dinersTotals.setScale(2, RoundingMode.CEILING);
         return this;
     }
 
-    public void setDinersTotals(Float dinersTotals) {
-        this.dinersTotals = dinersTotals;
+    public void setDinersTotals(BigDecimal dinersTotals) {
+        this.dinersTotals = dinersTotals.setScale(2, RoundingMode.CEILING);
     }
 
     public ZonedDateTime getData() {

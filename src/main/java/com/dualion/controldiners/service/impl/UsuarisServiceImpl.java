@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,7 +63,7 @@ private final Logger log = LoggerFactory.getLogger(UsuarisServiceImpl.class);
         		UsuarisProcesDTO usuarisProcesDTO = new UsuarisProcesDTO();
         		usuarisProcesDTO.setProcesId(procesDTO.getId());
         		usuarisProcesDTO.setUsuarisId(usuaris.getId());
-        		usuarisProcesDTO.setDiners(0.0F);
+        		usuarisProcesDTO.setDiners(BigDecimal.ZERO);
         		usuarisProcesService.save(usuarisProcesDTO);
         	}
         }
@@ -120,7 +121,7 @@ private final Logger log = LoggerFactory.getLogger(UsuarisServiceImpl.class);
     	if (procesDTO != null) {
     		UsuarisProcesDTO usuarisProcesDTO = usuarisProcesService.findOneByUserIdAndProcesId(id, procesDTO.getId());
     		if (usuarisProcesDTO != null) { 
-    			if( usuarisProcesDTO.getDiners() == 0) {
+    			if( usuarisProcesDTO.getDiners().compareTo(BigDecimal.ZERO) == 0) {
     				usuarisProcesService.delete(usuarisProcesDTO.getId());
     			}
     		}
@@ -142,7 +143,7 @@ private final Logger log = LoggerFactory.getLogger(UsuarisServiceImpl.class);
     			UsuarisProcesDTO newUsuarisProcesDTO = new UsuarisProcesDTO();
     			newUsuarisProcesDTO.setProcesId(procesDTO.getId());
     			newUsuarisProcesDTO.setUsuarisId(id);
-    			newUsuarisProcesDTO.setDiners(0.0F);
+    			newUsuarisProcesDTO.setDiners(BigDecimal.ZERO);
         		usuarisProcesService.save(newUsuarisProcesDTO);
     		}
     	}

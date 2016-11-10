@@ -2,6 +2,8 @@ package com.dualion.controldiners.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -17,14 +19,12 @@ public class UsuarisProcesDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Float diners;
-
+    private BigDecimal diners;
 
     private Long procesId;
     
     private Long usuarisId;
     
-
     private String usuarisNom;
 
     public Long getId() {
@@ -34,12 +34,12 @@ public class UsuarisProcesDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Float getDiners() {
+    public BigDecimal getDiners() {
         return diners;
     }
 
-    public void setDiners(Float diners) {
-        this.diners = diners;
+    public void setDiners(BigDecimal diners) {
+        this.diners = diners.setScale(2, RoundingMode.CEILING);
     }
 
     public Long getProcesId() {
