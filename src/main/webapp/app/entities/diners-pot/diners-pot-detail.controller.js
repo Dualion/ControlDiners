@@ -5,9 +5,9 @@
         .module('controlDinersApp')
         .controller('DinersPotDetailController', DinersPotDetailController);
 
-    DinersPotDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'DinersPot'];
+    DinersPotDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'DinersPot', 'Pot'];
 
-    function DinersPotDetailController($scope, $rootScope, $stateParams, previousState, entity, DinersPot) {
+    function DinersPotDetailController($scope, $rootScope, $stateParams, previousState, entity, DinersPot, Pot) {
         var vm = this;
 
         vm.dinersPot = entity;

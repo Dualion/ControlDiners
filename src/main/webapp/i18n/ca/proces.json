@@ -17,7 +17,8 @@
                 "title": "Procés"
             },
             "dataInici": "Data Inici",
-            "estat": "Estat"
+            "estat": "Estat",
+            "pot": "Pot"
         }
     }
 }

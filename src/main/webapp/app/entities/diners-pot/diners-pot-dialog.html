@@ -70,6 +70,12 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label data-translate="controlDinersApp.dinersPot.pot" for="field_pot">Pot</label>
+            <select class="form-control" id="field_pot" name="pot" ng-model="vm.dinersPot.potId" ng-options="pot.id as pot.id for pot in vm.pots">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

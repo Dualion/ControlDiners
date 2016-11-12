@@ -3,6 +3,8 @@ package com.dualion.controldiners.service.dto;
 import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 
@@ -26,6 +28,8 @@ public class DinersPotDTO implements Serializable {
     private String descripcio;
 
 
+    private Long potId;
+    
     public Long getId() {
         return id;
     }
@@ -53,6 +57,14 @@ public class DinersPotDTO implements Serializable {
 
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
+    }
+
+    public Long getPotId() {
+        return potId;
+    }
+
+    public void setPotId(Long potId) {
+        this.potId = potId;
     }
 
     @Override

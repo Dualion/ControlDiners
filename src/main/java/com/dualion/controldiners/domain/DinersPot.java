@@ -37,6 +37,9 @@ public class DinersPot implements Serializable {
     @Column(name = "descripcio", length = 100, nullable = false)
     private String descripcio;
 
+    @ManyToOne
+    private Pot pot;
+
     public Long getId() {
         return id;
     }
@@ -82,6 +85,19 @@ public class DinersPot implements Serializable {
 
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
+    }
+
+    public Pot getPot() {
+        return pot;
+    }
+
+    public DinersPot pot(Pot pot) {
+        this.pot = pot;
+        return this;
+    }
+
+    public void setPot(Pot pot) {
+        this.pot = pot;
     }
 
     @Override

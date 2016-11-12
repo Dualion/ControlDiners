@@ -16,6 +16,10 @@
         <dd>
             <span>{{vm.dinersPot.descripcio}}</span>
         </dd>
+        <dt><span data-translate="controlDinersApp.dinersPot.pot">Pot</span></dt>
+        <dd>
+            <a ui-sref="pot-detail({id:vm.dinersPot.potId})">{{vm.dinersPot.potId}}</a>
+        </dd>
     </dl>
 
     <button type="submit"

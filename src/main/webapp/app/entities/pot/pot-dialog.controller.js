@@ -3,19 +3,18 @@
 
     angular
         .module('controlDinersApp')
-        .controller('ProcesDialogController', ProcesDialogController);
+        .controller('PotDialogController', PotDialogController);
 
-    ProcesDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Proces', 'Pot'];
+    PotDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Pot'];
 
-    function ProcesDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Proces, Pot) {
+    function PotDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Pot) {
         var vm = this;
 
-        vm.proces = entity;
+        vm.pot = entity;
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.pots = Pot.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -27,15 +26,15 @@
 
         function save () {
             vm.isSaving = true;
-            if (vm.proces.id !== null) {
-                Proces.update(vm.proces, onSaveSuccess, onSaveError);
+            if (vm.pot.id !== null) {
+                Pot.update(vm.pot, onSaveSuccess, onSaveError);
             } else {
-                Proces.save(vm.proces, onSaveSuccess, onSaveError);
+                Pot.save(vm.pot, onSaveSuccess, onSaveError);
             }
         }
 
         function onSaveSuccess (result) {
-            $scope.$emit('controlDinersApp:procesUpdate', result);
+            $scope.$emit('controlDinersApp:potUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
         }

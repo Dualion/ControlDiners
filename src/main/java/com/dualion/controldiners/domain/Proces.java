@@ -22,12 +22,15 @@ public class Proces implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "estat")
-    private Boolean estat;
-    
     @CreatedDate
     @Column(name = "data_inici")
-    private ZonedDateTime dataInici = ZonedDateTime.now();;
+    private ZonedDateTime dataInici = ZonedDateTime.now();
+
+    @Column(name = "estat")
+    private Boolean estat;
+
+    @ManyToOne
+    private Pot pot;
 
     public Long getId() {
         return id;
@@ -61,6 +64,19 @@ public class Proces implements Serializable {
 
     public void setEstat(Boolean estat) {
         this.estat = estat;
+    }
+
+    public Pot getPot() {
+        return pot;
+    }
+
+    public Proces pot(Pot pot) {
+        this.pot = pot;
+        return this;
+    }
+
+    public void setPot(Pot pot) {
+        this.pot = pot;
     }
 
     @Override

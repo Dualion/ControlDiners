@@ -12,20 +12,22 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {})
 public interface ProcesMapper {
 
+    @Mapping(source = "pot.id", target = "potId")
     ProcesDTO procesToProcesDTO(Proces proces);
 
     List<ProcesDTO> procesToProcesDTOs(List<Proces> proces);
 
+    @Mapping(source = "potId", target = "pot")
     Proces procesDTOToProces(ProcesDTO procesDTO);
 
     List<Proces> procesDTOsToProces(List<ProcesDTO> procesDTOs);
-    
-    default Proces procesFromId(Long id) {
+
+    default Pot potFromId(Long id) {
         if (id == null) {
             return null;
         }
-        Proces proces = new Proces();
-        proces.setId(id);
-        return proces;
+        Pot pot = new Pot();
+        pot.setId(id);
+        return pot;
     }
 }

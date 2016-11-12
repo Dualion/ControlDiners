@@ -36,5 +36,17 @@
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         
+        <addForeignKeyConstraint baseColumnNames="proces_id"
+                                 baseTableName="usuaris_proces"
+                                 constraintName="fk_usuaris_proces_proces_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="proces"/>
+
+        <addForeignKeyConstraint baseColumnNames="usuaris_id"
+                                 baseTableName="usuaris_proces"
+                                 constraintName="fk_usuaris_proces_usuaris_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="usuaris"/>
+        
     </changeSet>
 </databaseChangeLog>

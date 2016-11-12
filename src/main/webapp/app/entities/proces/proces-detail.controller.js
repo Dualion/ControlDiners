@@ -5,9 +5,9 @@
         .module('controlDinersApp')
         .controller('ProcesDetailController', ProcesDetailController);
 
-    ProcesDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Proces'];
+    ProcesDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Proces', 'Pot'];
 
-    function ProcesDetailController($scope, $rootScope, $stateParams, previousState, entity, Proces) {
+    function ProcesDetailController($scope, $rootScope, $stateParams, previousState, entity, Proces, Pot) {
         var vm = this;
 
         vm.proces = entity;

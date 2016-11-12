@@ -29,9 +29,19 @@
                 <constraints nullable="true" />
             </column>
             
+            <column name="pot_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="proces" columnName="data_inici" columnDataType="datetime"/>
+        
+        <addForeignKeyConstraint baseColumnNames="pot_id"
+                                 baseTableName="proces"
+                                 constraintName="fk_proces_pot_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pot"/>
         
     </changeSet>
 </databaseChangeLog>

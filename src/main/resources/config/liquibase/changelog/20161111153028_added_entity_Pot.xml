@@ -14,38 +14,24 @@
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
-        Added the entity DinersPot.
+        Added the entity Pot.
     -->
-    <changeSet id="20161028234035-1" author="jhipster">
-        <createTable tableName="diners_pot">
+    <changeSet id="20161111153028-1" author="jhipster">
+        <createTable tableName="pot">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="diners_totals" type="${floatType}">
+            <column name="nom" type="varchar(20)">
                 <constraints nullable="false" />
             </column>
             
-            <column name="data" type="timestamp">
-                <constraints nullable="false" />
-            </column>
-            
-            <column name="descripcio" type="varchar(100)">
-                <constraints nullable="false" />
-            </column>
-            
-            <column name="pot_id" type="bigint">
+            <column name="data_inici" type="timestamp">
                 <constraints nullable="true" />
             </column>
-
+            
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="diners_pot" columnName="data" columnDataType="datetime"/>
-        
-        <addForeignKeyConstraint baseColumnNames="pot_id"
-                                 baseTableName="diners_pot"
-                                 constraintName="fk_diners_pot_pot_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="pot"/>
+        <dropDefaultValue tableName="pot" columnName="data_inici" columnDataType="datetime"/>
         
     </changeSet>
 </databaseChangeLog>

@@ -12,11 +12,22 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {})
 public interface DinersPotMapper {
 
+    @Mapping(source = "pot.id", target = "potId")
     DinersPotDTO dinersPotToDinersPotDTO(DinersPot dinersPot);
 
     List<DinersPotDTO> dinersPotsToDinersPotDTOs(List<DinersPot> dinersPots);
 
+    @Mapping(source = "potId", target = "pot")
     DinersPot dinersPotDTOToDinersPot(DinersPotDTO dinersPotDTO);
 
     List<DinersPot> dinersPotDTOsToDinersPots(List<DinersPotDTO> dinersPotDTOs);
+
+    default Pot potFromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Pot pot = new Pot();
+        pot.setId(id);
+        return pot;
+    }
 }

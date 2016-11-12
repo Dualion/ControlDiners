@@ -11,6 +11,7 @@
                     <th jh-sort-by="dinersTotals"><span data-translate="controlDinersApp.dinersPot.dinersTotals">Diners Totals</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="data"><span data-translate="controlDinersApp.dinersPot.data">Data</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="descripcio"><span data-translate="controlDinersApp.dinersPot.descripcio">Descripcio</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="potId"><span data-translate="controlDinersApp.dinersPot.pot">Pot</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -20,6 +21,9 @@
                     <td>{{dinersPot.dinersTotals}}</td>
                     <td>{{dinersPot.data | date:'medium'}}</td>
                     <td>{{dinersPot.descripcio}}</td>
+                    <td>
+                        <a ui-sref="pot-detail({id:dinersPot.potId})">{{dinersPot.potId}}</a>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

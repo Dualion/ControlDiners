@@ -5,9 +5,9 @@
         .module('controlDinersApp')
         .controller('DinersPotDialogController', DinersPotDialogController);
 
-    DinersPotDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'DinersPot'];
+    DinersPotDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'DinersPot', 'Pot'];
 
-    function DinersPotDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, DinersPot) {
+    function DinersPotDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, DinersPot, Pot) {
         var vm = this;
 
         vm.dinersPot = entity;
@@ -15,6 +15,7 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
+        vm.pots = Pot.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

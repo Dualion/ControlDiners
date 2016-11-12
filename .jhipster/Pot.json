@@ -1,0 +1,26 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "nom",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength"
+            ],
+            "fieldValidateRulesMinlength": "3",
+            "fieldValidateRulesMaxlength": 20
+        },
+        {
+            "fieldName": "dataInici",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20161111153028",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "pot",
+    "pagination": "pager"
+}

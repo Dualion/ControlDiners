@@ -1,28 +1,25 @@
 package com.dualion.controldiners.service.dto;
 
 import java.time.ZonedDateTime;
+import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 
 /**
- * A DTO for the Proces entity.
+ * A DTO for the Pot entity.
  */
-public class ProcesDTO implements Serializable {
+public class PotDTO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
     private Long id;
+
+    @NotNull
+    @Size(min = 3, max = 20)
+    private String nom;
 
     private ZonedDateTime dataInici;
 
-    private Boolean estat;
 
-
-    private Long potId;
-    
     public Long getId() {
         return id;
     }
@@ -30,27 +27,19 @@ public class ProcesDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
     public ZonedDateTime getDataInici() {
         return dataInici;
     }
 
     public void setDataInici(ZonedDateTime dataInici) {
         this.dataInici = dataInici;
-    }
-    public Boolean getEstat() {
-        return estat;
-    }
-
-    public void setEstat(Boolean estat) {
-        this.estat = estat;
-    }
-
-    public Long getPotId() {
-        return potId;
-    }
-
-    public void setPotId(Long potId) {
-        this.potId = potId;
     }
 
     @Override
@@ -62,9 +51,9 @@ public class ProcesDTO implements Serializable {
             return false;
         }
 
-        ProcesDTO procesDTO = (ProcesDTO) o;
+        PotDTO potDTO = (PotDTO) o;
 
-        if ( ! Objects.equals(id, procesDTO.id)) return false;
+        if ( ! Objects.equals(id, potDTO.id)) return false;
 
         return true;
     }
@@ -76,10 +65,10 @@ public class ProcesDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ProcesDTO{" +
+        return "PotDTO{" +
             "id=" + id +
+            ", nom='" + nom + "'" +
             ", dataInici='" + dataInici + "'" +
-            ", estat='" + estat + "'" +
             '}';
     }
 }

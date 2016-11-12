@@ -12,6 +12,7 @@
                 "proces": "Procés",
                 "usuarisProces": "Usuaris del Proces",
                 "dinersPot": "Diners del Pot",
+                "pot": "Pot",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
